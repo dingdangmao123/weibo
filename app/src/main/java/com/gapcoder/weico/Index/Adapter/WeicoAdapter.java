@@ -10,12 +10,14 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gapcoder.weico.Comment.Comment;
 import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Title.Title;
@@ -52,17 +54,17 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         //加载item 布局文件
         View view = LayoutInflater.from(mContext).inflate(R.layout.weicoitem, parent, false);
         final SnapViewHolder h= new SnapViewHolder(view);
-  /*      h.t3.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(mContext,Title.class);
+                Intent i=new Intent(mContext,Comment.class);
                 int p=h.getAdapterPosition();
-                i.putExtra("id",data.get(p).getId());
-                i.putExtra("title",data.get(p).getTitle());
+                i.putExtra("wid",data.get(p).getId());
+                Log.i("tag",String.valueOf(data.get(p).getId()));
                 mContext.startActivity(i);
 
             }
-        });*/
+        });
         h.t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

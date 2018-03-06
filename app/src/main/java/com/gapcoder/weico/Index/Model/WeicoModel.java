@@ -110,4 +110,20 @@ public class WeicoModel {
     public void setLike(int like) {
         this.like = like;
     }
+
+    @Override
+    public String toString() {
+        return "WeicoModel{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", tid=" + tid +
+                ", title='" + title + '\'' +
+                ", face='" + face + '\'' +
+                ", name='" + name + '\'' +
+                ", time=" + time +
+                ", text='" + text + '\'' +
+                ", comment=" + comment +
+                ", like=" + like +
+                '}';
+    }
 }

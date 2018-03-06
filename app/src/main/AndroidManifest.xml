@@ -23,23 +23,24 @@
         <activity
             android:name=".Post"
             android:label=""
-            android:windowSoftInputMode="stateVisible|adjustResize"
-             />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".Title.Title"
-            android:label=""
-           />
+            android:label="" />
         <activity
             android:name=".User.User"
             android:label="" />
         <activity
             android:name=".Web"
-            android:label="@string/title_activity_web"
+            android:label="网页跳转"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Account.Account"
             android:label="个人微博" />
-        <activity android:name=".UserList.UserList"
+        <activity
+            android:name=".UserList.UserList"
+            android:label="" />
+        <activity android:name=".Comment.Comment"
             android:label=""
             ></activity>
     </application>

@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
@@ -31,8 +32,9 @@ public class Web extends Base {
 
 
     public void init(){
-        getSupportActionBar().setTitle(getIntent().getStringExtra("url"));
+
         url.setText("你将跳往第三方网站: "+getIntent().getStringExtra("url")+" 继续？");
+        Log.i("tag","hello");
        // web.loadUrl(getIntent().getStringExtra("key"));
     }
 
@@ -42,7 +44,7 @@ public class Web extends Base {
 
     @OnClick(R.id.ok)
     void web(){
-        web.loadUrl(getIntent().getStringExtra("key"));
+        web.loadUrl(getIntent().getStringExtra("url"));
     }
 
     @Override
