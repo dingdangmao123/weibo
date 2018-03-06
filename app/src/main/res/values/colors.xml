@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3b5999</color>
+    <color name="colorPrimaryDark">#3b5999</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="gray">#D9D9D9</color>
+    <color name="text">#666666</color>
+
+    <color name="weicoTitle">#3b5999</color>
+    <color name="weicoBtn">#3b5999</color>
+
+    <color name="highlight">#0099EE</color>
+
+</resources>

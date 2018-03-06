@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/weico"
+        android:title="首页"
+        android:icon="@mipmap/ic_home"/>
+    <item
+        android:id="@+id/title"
+        android:title="话题"
+        android:icon="@mipmap/ic_card_membership"/>
+    <item
+        android:id="@+id/account"
+        android:title="我"
+        android:icon="@mipmap/ic_supervisor_account"/>
+</menu>
