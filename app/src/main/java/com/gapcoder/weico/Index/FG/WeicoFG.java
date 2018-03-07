@@ -1,6 +1,7 @@
 package com.gapcoder.weico.Index.FG;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,14 @@ import android.widget.Toast;
 
 import com.example.zhouwei.library.CustomPopWindow;
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.MessageModel;
 import com.gapcoder.weico.Index.Adapter.WeicoAdapter;
 import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.gapcoder.weico.Index.Service.WeicoService;
+import com.gapcoder.weico.Message.Message;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Utils.Curl;
+import com.gapcoder.weico.Utils.Pool;
 import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -36,6 +42,8 @@ import com.zyyoona7.lib.VerticalGravity;
 import java.util.LinkedList;
 import java.util.List;
 
+import q.rorbin.badgeview.QBadgeView;
+
 import static android.R.attr.data;
 
 
@@ -45,13 +53,15 @@ public class WeicoFG extends BaseFG {
     LinkedList<WeicoModel> tmp=new LinkedList<WeicoModel>();
     WeicoAdapter adapter;
     Handler mh=new Handler();
-
+    TextView title;
+    QBadgeView msg;
+    View target;
     String type="new";
     boolean reset=false;
     int current=1;
     int cache=10;
     int id=0;
-
+    int uid=1;
 
     public WeicoFG() {
 
@@ -63,8 +73,17 @@ public class WeicoFG extends BaseFG {
     @Override
     public void CreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState,View v) {
+        target=v.findViewById(R.id.msg);
+        target.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                msg.hide(false);
+                Intent i=new Intent(getActivity(),Message.class);
+                startActivity(i);
 
-        final TextView title=(TextView)v.findViewById(R.id.weicoTitle);
+            }
+        });
+        title=(TextView)v.findViewById(R.id.weicoTitle);
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +158,7 @@ public class WeicoFG extends BaseFG {
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 Refresh(1);
+                getMessage();
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -149,7 +169,38 @@ public class WeicoFG extends BaseFG {
             }
         });
         Refresh(1);
+        getMessage();
+    }
+    void getMessage(){
+        Pool.run(new Runnable() {
+            @Override
+            public void run() {
 
+                MessageModel m= (MessageModel)Curl.getText("http://10.0.2.2/weico/message.php?id="+uid,MessageModel.class);
+                if(m==null)
+                    return ;
+                final int num=m.getTotal();
+                if(msg==null) {
+                    msg = new QBadgeView(getActivity());
+                    msg.bindTarget(target).setBadgeGravity(Gravity.CENTER | Gravity.END);
+                }
+                if(num<=0) {
+                    mh.post(new Runnable() {
+                        @Override
+                        public void run() {
+                           msg.hide(false);
+                        }
+                    });
+                } else{
+                    mh.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            msg.setBadgeNumber(num);
+                        }
+                    });
+                }
+            }
+        });
     }
     void Refresh(final int  flag){
         if(flag==1){
@@ -219,11 +270,13 @@ public class WeicoFG extends BaseFG {
 
     @Override
     public void leftSelected() {
-        super.leftSelected();
+
+
     }
 
     @Override
-    public void setLeftIcon(ActionBar bar) {
-        bar.setHomeAsUpIndicator(R.mipmap.ic_mail_outline);
+    public void setLeftIcon(android.support.v7.app.ActionBar bar) {
+       // Log.i("tag","lefticon");
+       // bar.setHomeAsUpIndicator(R.mipmap.ic_mail_outline);
     }
 }

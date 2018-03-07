@@ -111,9 +111,5 @@ public class TitleFG extends BaseFG {
         Log.i("tag","leftselect");
     }
 
-    @Override
-    public void setLeftIcon(ActionBar bar) {
-      //  bar.setHomeAsUpIndicator(R.mipmap.ic_refresh);
-        Log.i("tag","lefticon");
-    }
+
 }

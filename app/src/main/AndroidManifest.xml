@@ -40,7 +40,10 @@
         <activity
             android:name=".UserList.UserList"
             android:label="" />
-        <activity android:name=".Comment.Comment"
+        <activity
+            android:name=".Comment.Comment"
+            android:label="" />
+        <activity android:name=".Message.Message"
             android:label=""
             ></activity>
     </application>

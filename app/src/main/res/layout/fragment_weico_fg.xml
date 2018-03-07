@@ -12,6 +12,13 @@
         style="@style/MyToolBar"
         >
         <TextView
+            android:id="@+id/msg"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/ic_mail_outline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/weicoTitle"
             android:text="最新微博"
             android:textColor="#fff"

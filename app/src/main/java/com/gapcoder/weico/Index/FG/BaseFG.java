@@ -7,13 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
@@ -36,9 +36,11 @@ public class BaseFG extends Fragment{
         View v=init(inflater,container,savedInstanceState);
         Toolbar toolbar=(Toolbar)v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar bar=getActivity().getActionBar();
+        android.support.v7.app.ActionBar bar=((AppCompatActivity) getActivity()).getSupportActionBar();
+        Log.i("tag","basefg");
         if(bar!=null){
-            bar.setDisplayHomeAsUpEnabled(true);
+            Log.i("tag","bar");
+            //bar.setDisplayHomeAsUpEnabled(true);
             setLeftIcon(bar);
         }
         setHasOptionsMenu(true);
@@ -74,7 +76,7 @@ public class BaseFG extends Fragment{
     public void leftSelected(){
 
     }
-    public void setLeftIcon(ActionBar bar){
+    public void setLeftIcon(android.support.v7.app.ActionBar bar){
 
     }
 

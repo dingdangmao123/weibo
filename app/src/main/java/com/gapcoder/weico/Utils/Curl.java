@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.gapcoder.weico.Index.Model.WeicoModel;
+import com.google.gson.Gson;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -44,6 +47,38 @@ public class Curl {
         return sb.toString();
 
     }
+
+    public static Object getText(String link,Class<?> clz){
+
+        StringBuilder sb = new StringBuilder();
+        HttpURLConnection con=null;
+        try {
+            URL url=new URL(link);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/49.0");
+            InputStream in = con.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String str;
+            while ((str = br.readLine()) != null) {
+                // Log.i("url",str);
+                sb.append(str);
+            }
+            //Log.i("utl",sb.toString());
+
+        } catch (Exception e) {
+            Log.i("error",e.toString());
+        }finally {
+            if(con!=null)
+                con.disconnect();
+        }
+        Gson gson = new Gson();
+        Object tl = gson.fromJson(sb.toString(), clz);
+        return tl;
+
+    }
+
     public static Bitmap getImage(String link){
         HttpURLConnection urlConn=null;
         Bitmap bitmap=null;
