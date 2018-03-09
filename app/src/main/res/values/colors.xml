@@ -9,7 +9,7 @@
 
     <color name="weicoTitle">#3b5999</color>
     <color name="weicoBtn">#3b5999</color>
-
+    <color name="weicoBg">#4F94CD</color>
     <color name="highlight">#0099EE</color>
 
 </resources>

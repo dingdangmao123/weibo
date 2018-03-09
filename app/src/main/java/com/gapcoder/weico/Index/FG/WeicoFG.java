@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhouwei.library.CustomPopWindow;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.MessageModel;
 import com.gapcoder.weico.Index.Adapter.WeicoAdapter;
@@ -28,6 +29,8 @@ import com.gapcoder.weico.Message.Message;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
+import com.gapcoder.weico.Utils.T;
+import com.gapcoder.weico.Utils.Token;
 import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -157,8 +160,9 @@ public class WeicoFG extends BaseFG {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                T.show(getActivity(),"hello world");
                 Refresh(1);
-                getMessage();
+               // getMessage();
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -169,14 +173,14 @@ public class WeicoFG extends BaseFG {
             }
         });
         Refresh(1);
-        getMessage();
+       // getMessage();
     }
     void getMessage(){
         Pool.run(new Runnable() {
             @Override
             public void run() {
-
-                MessageModel m= (MessageModel)Curl.getText("http://10.0.2.2/weico/message.php?id="+uid,MessageModel.class);
+                Log.i("tag",Config.url+"message.php?token="+ Token.token);
+                MessageModel m= (MessageModel)Curl.getText(Config.url+"message.php?token="+ Token.token,MessageModel.class);
                 if(m==null)
                     return ;
                 final int num=m.getTotal();
@@ -260,7 +264,7 @@ public class WeicoFG extends BaseFG {
                     public void run() {
                         adapter.notifyDataSetChanged();
                         reset=false;
-                        Toast.makeText(getActivity(),String.valueOf(tmp.size()),Toast.LENGTH_SHORT).show();
+                        T.show(getActivity(),String.valueOf(tmp.size()));
                     }
                 });
                 //tmp.clear();

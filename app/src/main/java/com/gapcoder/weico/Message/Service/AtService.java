@@ -1,30 +1,27 @@
-package com.gapcoder.weico.Comment;
+package com.gapcoder.weico.Message.Service;
 
 import android.util.Log;
 
+import com.gapcoder.weico.Comment.Comm;
 import com.gapcoder.weico.Config;
-import com.gapcoder.weico.Index.Model.WeicoModel;
+import com.gapcoder.weico.Message.Model.AtModel;
+import com.gapcoder.weico.Utils.Token;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.LinkedList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by suxiaohui on 2018/3/6.
+ * Created by suxiaohui on 2018/3/8.
  */
 
-public class CommentService {
-
-    public static Comm getList(int wid, int id, int f) {
+public class AtService {
+    public static AtModel getList(int id, int f) {
 
         try {
             OkHttpClient cli = new OkHttpClient();
-            String url= Config.url+"comment.php?wid="+wid+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
+            String url= Config.url+"at.php?token="+ Token.token+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
             Log.i("tag",url);
             Request req = new Request.Builder().url(url).build();
             Response res = cli.newCall(req).execute();
@@ -32,8 +29,8 @@ public class CommentService {
            /* Type listType = new TypeToken<LinkedList<CommentModel>>() {
             }.getType();*/
             Gson gson = new Gson();
-            Comm tl = gson.fromJson(json, Comm.class);
-            return tl;
+            AtModel t = gson.fromJson(json, AtModel.class);
+            return t;
         } catch (Exception e) {
             Log.i("tag", e.toString());
         }

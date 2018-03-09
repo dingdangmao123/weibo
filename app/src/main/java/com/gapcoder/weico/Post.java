@@ -39,25 +39,6 @@ public class Post extends Base {
     @Override
     public void init() {
 
-        /*emojiLayout.setEditTextSmile(richEditText);
-        RichEditBuilder richEditBuilder = new RichEditBuilder();
-        richEditBuilder.setEditText(richEditText)
-        *//*        .setTopicModels(topicModels)
-                .setUserModels(nameList)*//*
-                .setColorAtUser("#FF00C0")
-                .setColorTopic("#F0F0C0")
-                .setEditTextAtUtilJumpListener(new OnEditTextUtilJumpListener() {
-                    @Override
-                    public void notifyAt() {
-                        //JumpUtil.goToUserList(MainActivity.this, MainActivity.REQUEST_USER_CODE_INPUT);
-                    }
-
-                    @Override
-                    public void notifyTopic() {
-                        //JumpUtil.goToTopicList(MainActivity.this, MainActivity.REQUEST_TOPIC_CODE_INPUT);
-                    }
-                })
-                .builder();*/
     }
 
 
@@ -68,7 +49,7 @@ public class Post extends Base {
                 try {
                     OkHttpClient cli = new OkHttpClient();
                     RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", text.getText().toString()).build();
-                    Request req = new Request.Builder().url("http://10.0.2.2/weico/post.php").post(rb).build();
+                    Request req = new Request.Builder().url(Config.url+"post.php").post(rb).build();
                     Response res = cli.newCall(req).execute();
                     final String ok = res.body().string();
                     mh.post(new Runnable() {

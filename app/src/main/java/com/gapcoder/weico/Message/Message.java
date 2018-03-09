@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.MessageModel;
 import com.gapcoder.weico.Index.FG.AccountFG;
@@ -23,6 +24,7 @@ import com.gapcoder.weico.Message.FG.FollowFG;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
+import com.gapcoder.weico.Utils.Token;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
@@ -149,7 +151,7 @@ public class Message extends Base {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                m = (MessageModel) Curl.getText("http://10.0.2.2/weico/message.php?id=" + uid, MessageModel.class);
+                m = (MessageModel) Curl.getText(Config.url+"message.php?token="+Token.token+"&type=true", MessageModel.class);
                 if (m == null)
                     return;
                 mh.post(new Runnable() {

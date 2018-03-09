@@ -40,8 +40,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
     private HashMap<Integer,Comm.UserBean> user;
 
 
-
-
     public CommentAdapter(Comm data, Context context) {
 
         comment=data.getComment();

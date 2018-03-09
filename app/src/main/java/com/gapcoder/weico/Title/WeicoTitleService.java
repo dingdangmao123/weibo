@@ -2,6 +2,7 @@ package com.gapcoder.weico.Title;
 
 import android.util.Log;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,9 +26,9 @@ public class WeicoTitleService {
             OkHttpClient cli = new OkHttpClient();
             String url="";
             if(tid!=0)
-                url="http://10.0.2.2/weico/weicotitle.php?tid="+String.valueOf(tid)+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
+                url= Config.url+"weicotitle.php?tid="+String.valueOf(tid)+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
             else
-                url="http://10.0.2.2/weico/weicotitle.php?tid="+String.valueOf(tid)+"&title="+title+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
+                url=Config.url+"weicotitle.php?tid="+String.valueOf(tid)+"&title="+title+"&flag="+String.valueOf(f)+"&id="+String.valueOf(id);
             Request req = new Request.Builder().url(url).build();
             Response res = cli.newCall(req).execute();
             String json = new String(res.body().bytes(), "utf8");

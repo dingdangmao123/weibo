@@ -2,6 +2,7 @@ package com.gapcoder.weico.General;
 
 import android.util.Log;
 
+import com.gapcoder.weico.Config;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;
@@ -18,7 +19,7 @@ public class UserService {
 
         try {
             OkHttpClient cli = new OkHttpClient();
-            Request req = new Request.Builder().url("http://10.0.2.2/weico/user.php?id="+String.valueOf(id)).build();
+            Request req = new Request.Builder().url(Config.url+"user.php?id="+String.valueOf(id)).build();
             Response res = cli.newCall(req).execute();
             String json = new String(res.body().bytes(), "utf8");
             Gson gson = new Gson();

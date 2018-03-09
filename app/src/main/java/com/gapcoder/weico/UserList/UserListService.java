@@ -2,6 +2,7 @@ package com.gapcoder.weico.UserList;
 
 import android.util.Log;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +24,7 @@ public class UserListService {
 
         try {
             OkHttpClient cli = new OkHttpClient();
-            String url="http://10.0.2.2/weico/myfans.php?uid="+String.valueOf(uid)+"&flag="+String.valueOf(flag)+"&id="+String.valueOf(id);
+            String url= Config.url+"myfans.php?uid="+String.valueOf(uid)+"&flag="+String.valueOf(flag)+"&id="+String.valueOf(id);
             Log.i("tag",url);
             Request req = new Request.Builder().url(url).build();
             Response res = cli.newCall(req).execute();

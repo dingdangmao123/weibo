@@ -2,6 +2,7 @@ package com.gapcoder.weico.Index.Service;
 
 import android.util.Log;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.google.gson.Gson;
@@ -24,8 +25,7 @@ public class TitleService {
 
         try {
             OkHttpClient cli = new OkHttpClient();
-            Log.i("tag","http://10.0.2.2/weico/title.php");
-            Request req = new Request.Builder().url("http://10.0.2.2/weico/title.php").build();
+            Request req = new Request.Builder().url(Config.url+"title.php").build();
             Response res = cli.newCall(req).execute();
             String json = new String(res.body().bytes(), "utf8");
             Type listType = new TypeToken<LinkedList<TitleModel>>() {

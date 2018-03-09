@@ -11,13 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gapcoder.weico.Comment.Comm;
 import com.gapcoder.weico.Comment.Comment;
+import com.gapcoder.weico.Comment.CommentModel;
 import com.gapcoder.weico.Message.Model.AtModel;
 import com.gapcoder.weico.Message.Model.FollowModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.User.User;
 import com.gapcoder.weico.Utils.Image;
+import com.gapcoder.weico.Utils.Time;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,25 +34,28 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
 
     private Context context;
 
-    private List<AtModel> data;
 
-    public AtAdapter(List<AtModel> data, Context context) {
-        this.data = data;
+
+    private LinkedList<AtModel.InnerAtModel> inner;
+    private HashMap<Integer,AtModel.UserBean> user;
+
+    public AtAdapter(AtModel data, Context context) {
+        inner=data.getInner();
+        user=data.getUser();
         this.context = context;
-
     }
 
     @Override
     public AtAdapter.SnapViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //加载item 布局文件
-        View view = LayoutInflater.from(context).inflate(R.layout.weicoitem, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.atitem, parent, false);
         final AtAdapter.SnapViewHolder h= new AtAdapter.SnapViewHolder(view);
-        h.t3.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(context,Comment.class);
                 int p=h.getAdapterPosition();
-                i.putExtra("wid",data.get(p).getWid());
+                i.putExtra("wid",inner.get(p).getWid());
                 context.startActivity(i);
             }
         });
@@ -56,12 +64,23 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
 
     @Override
     public void onBindViewHolder(AtAdapter.SnapViewHolder h, int position) {
-        AtModel m=data.get(position);
+        AtModel.InnerAtModel m=inner.get(position);
+        int id=m.getHid();
+        String face=user.get(m.getHid()).getFace();
+        h.t1.setText(user.get(id).getName());
+        h.t2.setText("@了你·"+ Time.format(m.getTime()));
+
+
+        if(!face.equals((String)h.face.getTag()))
+            h.face.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.face));
+
+        h.face.setTag(face);
+        Image.down((Activity)context,h.face,face);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return inner.size();
     }
 
     static class SnapViewHolder extends RecyclerView.ViewHolder {
@@ -69,14 +88,14 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
         ImageView face;
         TextView t1;
         TextView t2;
-        TextView t3;
+
 
         public SnapViewHolder(View itemView) {
             super(itemView);
             face = (ImageView) itemView.findViewById(R.id.face);
             t1 = (TextView) itemView.findViewById(R.id.name);
-            t2 = (TextView) itemView.findViewById(R.id.time);
-            t2 = (TextView) itemView.findViewById(R.id.info);
+            t2 = (TextView) itemView.findViewById(R.id.text);
+
         }
     }
 }

@@ -43,9 +43,13 @@
         <activity
             android:name=".Comment.Comment"
             android:label="" />
-        <activity android:name=".Message.Message"
-            android:label=""
-            ></activity>
+        <activity
+            android:name=".Message.Message"
+            android:label="" />
+        <activity android:name=".Login.Login">
+
+
+        </activity>
     </application>
 
 </manifest>
