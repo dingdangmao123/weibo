@@ -9,20 +9,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.WeicoService;
 import com.gapcoder.weico.Index.Model.WeicoModel;
-import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.User.User;
 import com.gapcoder.weico.Utils.Curl;
@@ -35,14 +31,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -74,6 +67,8 @@ public class Comment extends Base {
 
     @BindView(R.id.send)
     Button send;
+    @BindView(R.id.likebtn)
+    Button likebtn;
 
     private Comm data = new Comm();
     private CommentAdapter adapter;
@@ -83,21 +78,22 @@ public class Comment extends Base {
     int cache = 10;
     int id = 0;
 
-    int cid=0;
-    int cuid=0;
+    int cid = 0;
+    int cuid = 0;
 
-    public void update(String str,int cuid,int cid){
-        edit.setHint("回复"+str);
-        this.cid=cid;
-        this.cuid=cuid;
+    public void update(String str, int cuid, int cid) {
+        edit.setHint("回复" + str);
+        this.cid = cid;
+        this.cuid = cuid;
     }
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_comment);
     }
 
     @OnClick(R.id.send)
-    void send(){
+    void send() {
 
         Pool.run(new Runnable() {
             @Override
@@ -106,7 +102,7 @@ public class Comment extends Base {
                 try {
                     OkHttpClient cli = new OkHttpClient();
                     RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", edit.getText().toString()).
-                            add("cuid",""+cuid).add("cid",""+cid).add("wid",""+wid).add("hid",""+m.getUid()).build();
+                            add("cuid", "" + cuid).add("cid", "" + cid).add("wid", "" + wid).add("hid", "" + m.getUid()).build();
 
                     Request req = new Request.Builder().url("http://10.0.2.2/weico/reply.php").post(rb).build();
                     Response res = cli.newCall(req).execute();
@@ -124,20 +120,30 @@ public class Comment extends Base {
                     // Toast.makeText(Post.this,e.toString(),Toast.LENGTH_SHORT).show();
                     T.show(Comment.this, e.toString());
                 }
-                cid=0;
-                cuid=0;
+                cid = 0;
+                cuid = 0;
 
             }
         });
 
     }
 
-    private void hintKeyboard() { InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm.isActive()&&getCurrentFocus()!=null){ if (getCurrentFocus().getWindowToken()!=null) {
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        } } }
+    private void hintKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && getCurrentFocus() != null) {
+            if (getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
 
 
+    @OnClick(R.id.likebtn)
+    void like(){
+
+
+
+    }
 
     @OnClick(R.id.name)
     void jump() {

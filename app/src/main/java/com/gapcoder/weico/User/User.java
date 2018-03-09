@@ -100,7 +100,7 @@ public class User extends Base {
             @Override
             public void run() {
                 final UserModel m = UserService.getUser(uid);
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         name.setText(m.getName());
@@ -111,7 +111,7 @@ public class User extends Base {
                     }
                 });
                 final Bitmap bit = Curl.getImage(m.getFace());
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         face.setImageBitmap(bit);

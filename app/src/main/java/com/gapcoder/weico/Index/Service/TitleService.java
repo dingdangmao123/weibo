@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.TitleModel;
-import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,5 +37,25 @@ public class TitleService {
         }
 
         return new LinkedList<TitleModel>();
+    }
+
+
+    public static  TitleModel getTitleList(int i) {
+
+        String json=null;
+        try {
+            OkHttpClient cli = new OkHttpClient();
+            Request req = new Request.Builder().url(Config.url+"title.php").build();
+            Response res = cli.newCall(req).execute();
+            json = new String(res.body().bytes(), "utf8");
+            Type listType = new TypeToken<LinkedList<TitleModel>>() {
+            }.getType();
+            Gson gson = new Gson();
+            TitleModel tl = gson.fromJson(json,  TitleModel.class);
+            return tl;
+        } catch (Exception e) {
+            Log.i("tag", e.toString());
+        }
+        return null;
     }
 }

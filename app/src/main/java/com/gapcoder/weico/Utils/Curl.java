@@ -62,11 +62,8 @@ public class Curl {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String str;
             while ((str = br.readLine()) != null) {
-                // Log.i("url",str);
                 sb.append(str);
             }
-            //Log.i("utl",sb.toString());
-
         } catch (Exception e) {
             Log.i("error",e.toString());
         }finally {

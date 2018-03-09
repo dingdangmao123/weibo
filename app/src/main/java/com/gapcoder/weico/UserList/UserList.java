@@ -24,7 +24,7 @@ public class UserList extends Base {
     LinkedList<UserListModel> data = new LinkedList<>();
     LinkedList<UserListModel> tmp = new LinkedList<>();
     UserListAdapter adapter;
-    Handler mh = new Handler();
+
     int cache = 10;
     int id = 0;
     int uid = 0;
@@ -105,11 +105,10 @@ public class UserList extends Base {
                         data.removeFirst();
                     }
                 }
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
-                        //  Toast.makeText(UserList.this,String.valueOf(data.size()),Toast.LENGTH_SHORT).show();
                     }
                 });
             }

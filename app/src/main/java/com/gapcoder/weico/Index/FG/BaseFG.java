@@ -26,9 +26,8 @@ public class BaseFG extends Fragment{
 
 
     public BaseFG() {
-        // Required empty public constructor
-    }
 
+    }
 
     @Nullable
     @Override
@@ -37,10 +36,7 @@ public class BaseFG extends Fragment{
         Toolbar toolbar=(Toolbar)v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar bar=((AppCompatActivity) getActivity()).getSupportActionBar();
-        Log.i("tag","basefg");
         if(bar!=null){
-            Log.i("tag","bar");
-            //bar.setDisplayHomeAsUpEnabled(true);
             setLeftIcon(bar);
         }
         setHasOptionsMenu(true);
@@ -78,6 +74,10 @@ public class BaseFG extends Fragment{
     }
     public void setLeftIcon(android.support.v7.app.ActionBar bar){
 
+    }
+
+    void UI(Runnable r){
+        getActivity().runOnUiThread(r);
     }
 
 }

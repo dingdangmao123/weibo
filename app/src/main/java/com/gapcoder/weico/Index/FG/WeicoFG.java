@@ -55,7 +55,6 @@ public class WeicoFG extends BaseFG {
     LinkedList<WeicoModel> data=new LinkedList<WeicoModel>();
     LinkedList<WeicoModel> tmp=new LinkedList<WeicoModel>();
     WeicoAdapter adapter;
-    Handler mh=new Handler();
     TextView title;
     QBadgeView msg;
     View target;
@@ -150,7 +149,6 @@ public class WeicoFG extends BaseFG {
             }
         });
 
-
         adapter=new WeicoAdapter(data,getActivity());
         RecyclerView tl=(RecyclerView)v.findViewById(R.id.timeline);
         tl.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -162,7 +160,7 @@ public class WeicoFG extends BaseFG {
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 T.show(getActivity(),"hello world");
                 Refresh(1);
-               // getMessage();
+                getMessage();
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -173,7 +171,7 @@ public class WeicoFG extends BaseFG {
             }
         });
         Refresh(1);
-       // getMessage();
+        getMessage();
     }
     void getMessage(){
         Pool.run(new Runnable() {
@@ -189,14 +187,14 @@ public class WeicoFG extends BaseFG {
                     msg.bindTarget(target).setBadgeGravity(Gravity.CENTER | Gravity.END);
                 }
                 if(num<=0) {
-                    mh.post(new Runnable() {
+                    UI(new Runnable() {
                         @Override
                         public void run() {
                            msg.hide(false);
                         }
                     });
                 } else{
-                    mh.post(new Runnable() {
+                    UI(new Runnable() {
                         @Override
                         public void run() {
                             msg.setBadgeNumber(num);
@@ -259,28 +257,15 @@ public class WeicoFG extends BaseFG {
                     }
                 }
 
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
                         reset=false;
-                        T.show(getActivity(),String.valueOf(tmp.size()));
                     }
                 });
-                //tmp.clear();
+                tmp.clear();
             }
         }).start();
-    }
-
-    @Override
-    public void leftSelected() {
-
-
-    }
-
-    @Override
-    public void setLeftIcon(android.support.v7.app.ActionBar bar) {
-       // Log.i("tag","lefticon");
-       // bar.setHomeAsUpIndicator(R.mipmap.ic_mail_outline);
     }
 }

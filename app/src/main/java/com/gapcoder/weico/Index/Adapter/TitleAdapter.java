@@ -32,9 +32,9 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.SnapViewHold
 
     private Context mContext;
 
-    private List<TitleModel> data;
+    private List<TitleModel.inner> data;
 
-    public TitleAdapter(List<TitleModel> data, Context context) {
+    public TitleAdapter(List<TitleModel.inner> data, Context context) {
         this.data = data;
         this.mContext = context;
         Log.i("tag","title");
@@ -62,7 +62,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.SnapViewHold
     @Override
     public void onBindViewHolder(SnapViewHolder h, int position) {
 
-        TitleModel m = data.get(position);
+        TitleModel.inner m = data.get(position);
         h.t1.setText("#" + m.getTitle() + "#");
     }
 

@@ -30,12 +30,8 @@ public class Web extends Base {
     @BindView(R.id.ok)
     Button ok;
 
-
     public void init(){
-
         url.setText("你将跳往第三方网站: "+getIntent().getStringExtra("url")+" 继续？");
-        Log.i("tag","hello");
-       // web.loadUrl(getIntent().getStringExtra("key"));
     }
 
     public void setContentView(){

@@ -35,12 +35,10 @@ public class Post extends Base {
         setContentView(R.layout.activity_post);
     }
 
-
     @Override
     public void init() {
 
     }
-
 
     void post() {
         Pool.run(new Runnable() {
@@ -49,17 +47,16 @@ public class Post extends Base {
                 try {
                     OkHttpClient cli = new OkHttpClient();
                     RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", text.getText().toString()).build();
-                    Request req = new Request.Builder().url(Config.url+"post.php").post(rb).build();
+                    Request req = new Request.Builder().url(Config.url + "post.php").post(rb).build();
                     Response res = cli.newCall(req).execute();
                     final String ok = res.body().string();
-                    mh.post(new Runnable() {
+                    UI(new Runnable() {
                         @Override
                         public void run() {
                             T.show(Post.this, ok);
                         }
                     });
                 } catch (Exception e) {
-                    // Toast.makeText(Post.this,e.toString(),Toast.LENGTH_SHORT).show();
                     T.show(Post.this, e.toString());
                 }
             }
@@ -71,12 +68,10 @@ public class Post extends Base {
         getMenuInflater().inflate(R.menu.ok, menu);
         return true;
     }
-
     @Override
-    public  void onItemSelected(int id){
-            if(id==R.id.TextOk)
-                post();
-
+    public void onItemSelected(int id) {
+        if (id == R.id.TextOk)
+            post();
     }
 
 }

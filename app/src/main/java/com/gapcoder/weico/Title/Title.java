@@ -31,8 +31,7 @@ public class Title extends Base {
     LinkedList<WeicoModel> data=new LinkedList<WeicoModel>();
     LinkedList<WeicoModel> tmp=new LinkedList<WeicoModel>();
     WeicoAdapter adapter;
-     TitleModel title;
-    Handler mh=new Handler();
+     TitleModel.inner title;
     int cache=10;
     int id=0;
 
@@ -50,7 +49,7 @@ public class Title extends Base {
     public void init(){
 
 
-        title=new TitleModel(getIntent().getIntExtra("id",0),getIntent().getStringExtra("title"));
+        title=new TitleModel.inner(getIntent().getIntExtra("id",0),getIntent().getStringExtra("title"));
         getSupportActionBar().setTitle(title.getTitle());
 
         adapter=new WeicoAdapter(data,this);
@@ -90,7 +89,7 @@ public class Title extends Base {
             @Override
             public void run() {
 
-                Log.i("tag",String.valueOf(title.getId()));
+
                tmp= WeicoTitleService.getList(id,flag,title.getId(),title.getTitle());
 
                 if(tmp.size()==0)
@@ -112,7 +111,7 @@ public class Title extends Base {
                 }
 
 
-                mh.post(new Runnable() {
+               UI(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();

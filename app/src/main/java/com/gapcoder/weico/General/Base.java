@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 
 public class Base extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,9 @@ public class Base extends AppCompatActivity {
 
     public  void onItemSelected(int id){
 
+    }
+    public void UI(Runnable r){
+        runOnUiThread(r);
     }
 
 }
