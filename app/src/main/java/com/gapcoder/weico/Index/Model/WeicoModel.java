@@ -1,14 +1,119 @@
 package com.gapcoder.weico.Index.Model;
 
+import com.gapcoder.weico.General.SysMsg;
+
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by suxiaohui on 2018/3/2.
  */
 
-public class WeicoModel {
-    private int id;
+public class WeicoModel extends SysMsg{
+
+    private LinkedList<InnerBean> inner;
+
+    public LinkedList<InnerBean> getInner() {
+        return inner;
+    }
+
+    public void setInner(LinkedList<InnerBean> inner) {
+        this.inner = inner;
+    }
+
+    public static class InnerBean {
+        /**
+         * id : 29
+         * uid : 4
+         * name : Apple
+         * face : http://10.0.2.2/weico/face/f4.jpg
+         * text : this is a beautiful day! @gapcoder @Apple
+         * time : 1520419999
+         * comment : 0
+         * love : 0
+         */
+
+        private int id;
+        private int uid;
+        private String name;
+        private String face;
+        private String text;
+        private int time;
+        private int comment;
+        private int love;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getUid() {
+            return uid;
+        }
+
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getFace() {
+            return face;
+        }
+
+        public void setFace(String face) {
+            this.face = face;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public int getTime() {
+            return time;
+        }
+
+        public void setTime(int time) {
+            this.time = time;
+        }
+
+        public int getComment() {
+            return comment;
+        }
+
+        public void setComment(int comment) {
+            this.comment = comment;
+        }
+
+        public int getLove() {
+            return love;
+        }
+
+        public void setLove(int love) {
+            this.love = love;
+        }
+    }
+
+
+
+
+
+  /*  private int id;
     private int uid;
 
-    private int tid;
     private String title;
 
     private String face;
@@ -21,7 +126,6 @@ public class WeicoModel {
     public WeicoModel(int id, int uid, int tid, String title, String face, String name, int time, String text, int comment, int like) {
         this.id = id;
         this.uid = uid;
-        this.tid = tid;
         this.title = title;
         this.face = face;
         this.name = name;
@@ -33,14 +137,6 @@ public class WeicoModel {
 
     public int getId() {
         return id;
-    }
-
-    public int getTid() {
-        return tid;
-    }
-
-    public void setTid(int tid) {
-        this.tid = tid;
     }
 
     public String getTitle() {
@@ -125,5 +221,5 @@ public class WeicoModel {
                 ", comment=" + comment +
                 ", like=" + like +
                 '}';
-    }
+    }*/
 }

@@ -30,30 +30,28 @@ import java.util.List;
 
 public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.SnapViewHolder> {
 
-    private Context mContext;
+    private Context context;
 
     private List<TitleModel.inner> data;
 
     public TitleAdapter(List<TitleModel.inner> data, Context context) {
         this.data = data;
-        this.mContext = context;
-        Log.i("tag","title");
+        this.context = context;
     }
 
     @Override
     public SnapViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //加载item 布局文件
-        View view = LayoutInflater.from(mContext).inflate(R.layout.titleitem, parent, false);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.titleitem, parent, false);
         final SnapViewHolder h= new SnapViewHolder(view);
         h.t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int p=h.getAdapterPosition();
-                Intent i=new Intent(mContext,Title.class);
+                Intent i=new Intent(context,Title.class);
                 i.putExtra("id",data.get(p).getId());
                 i.putExtra("title",data.get(p).getTitle());
-                mContext.startActivity(i);
+                context.startActivity(i);
             }
         });
         return h;
@@ -61,7 +59,6 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.SnapViewHold
 
     @Override
     public void onBindViewHolder(SnapViewHolder h, int position) {
-
         TitleModel.inner m = data.get(position);
         h.t1.setText("#" + m.getTitle() + "#");
     }
@@ -72,7 +69,6 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.SnapViewHold
     }
 
     static class SnapViewHolder extends RecyclerView.ViewHolder {
-
 
         TextView t1;
 

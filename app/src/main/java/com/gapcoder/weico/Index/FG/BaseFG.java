@@ -15,8 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gapcoder.weico.Config;
+import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Utils.T;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by suxiaohui on 2018/3/2.
@@ -24,6 +31,7 @@ import com.gapcoder.weico.R;
 
 public class BaseFG extends Fragment{
 
+    private Unbinder binder;
 
     public BaseFG() {
 
@@ -33,6 +41,7 @@ public class BaseFG extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=init(inflater,container,savedInstanceState);
+        binder = ButterKnife.bind(this,v);
         Toolbar toolbar=(Toolbar)v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar bar=((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -76,8 +85,37 @@ public class BaseFG extends Fragment{
 
     }
 
+    boolean check(final SysMsg m, final SmartRefreshLayout rf){
+        if (!m.getCode().equals(Config.SUCCESS)) {
+            UI(new Runnable() {
+                @Override
+                public void run() {
+                    SmartRefresh(rf);
+                    T.show(getActivity(), m.getMsg());
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+
+    public void SmartRefresh(SmartRefreshLayout rf){
+        if(rf!=null) {
+            if(rf.isRefreshing())
+                rf.finishRefresh(true);
+            if(rf.isLoading())
+                rf.finishLoadmore(true);
+        }
+    }
+
     void UI(Runnable r){
         getActivity().runOnUiThread(r);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binder.unbind();
     }
 
 }

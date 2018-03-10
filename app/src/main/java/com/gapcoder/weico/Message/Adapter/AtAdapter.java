@@ -36,10 +36,10 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
 
 
 
-    private LinkedList<AtModel.InnerAtModel> inner;
-    private HashMap<Integer,AtModel.UserBean> user;
+    private LinkedList<AtModel.InnerBeanX.InnerBean> inner;
+    private HashMap<Integer,AtModel.InnerBeanX.InnerUserBean> user;
 
-    public AtAdapter(AtModel data, Context context) {
+    public AtAdapter(AtModel.InnerBeanX data, Context context) {
         inner=data.getInner();
         user=data.getUser();
         this.context = context;
@@ -64,7 +64,7 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
 
     @Override
     public void onBindViewHolder(AtAdapter.SnapViewHolder h, int position) {
-        AtModel.InnerAtModel m=inner.get(position);
+        AtModel.InnerBeanX.InnerBean m=inner.get(position);
         int id=m.getHid();
         String face=user.get(m.getHid()).getFace();
         h.t1.setText(user.get(id).getName());

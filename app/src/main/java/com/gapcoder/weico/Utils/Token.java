@@ -5,5 +5,5 @@ package com.gapcoder.weico.Utils;
  */
 
 public class Token {
-    public static String token="";
+    public static String token="4063acc5eeece1cf92deabd6d4b531c38ef8a282";
 }

@@ -26,7 +26,7 @@ public class LinkText {
 
 
     final  String title = "(#[^#]+#)";
-    final String  weico="(@[^\\s]+)";
+    final String  weico="(@[^\\s@]+)";
     final String url="(https?://(/|[0-9a-zA-Z]|\\.|%)+)";
 
      Pattern T = Pattern.compile(title);

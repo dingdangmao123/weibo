@@ -1,15 +1,17 @@
 package com.gapcoder.weico.UserList;
 
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.widget.TextView;
 
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
+import com.gapcoder.weico.Utils.Token;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -17,12 +19,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.LinkedList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class UserList extends Base {
 
-    LinkedList<UserListModel> data = new LinkedList<>();
-    LinkedList<UserListModel> tmp = new LinkedList<>();
+    LinkedList<UserListModel.InnerBean> data = new LinkedList<>();
+    LinkedList<UserListModel.InnerBean> tmp = new LinkedList<>();
     UserListAdapter adapter;
 
     int cache = 10;
@@ -32,6 +33,10 @@ public class UserList extends Base {
     String type = "";
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.timeline)
+    RecyclerView tl;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout rf;
 
     @Override
     public void setContentView() {
@@ -45,32 +50,29 @@ public class UserList extends Base {
             return;
 
         type = getIntent().getStringExtra("type");
-        if(type.equals("fans"))
+        if (type.equals("fans"))
             title.setText("粉丝");
         else
             title.setText("关注");
 
         adapter = new UserListAdapter(data, this);
-        RecyclerView tl = (RecyclerView) findViewById(R.id.timeline);
         tl.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         tl.setAdapter(adapter);
-        RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+
+        rf.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 Refresh(1);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        rf.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
                 Refresh(0);
             }
         });
         Refresh(1);
-
+        rf.autoRefresh();
 
     }
 
@@ -86,10 +88,18 @@ public class UserList extends Base {
             @Override
             public void run() {
 
+                String key = "";
                 if (type.equals("fans"))
-                    tmp = UserListService.getFans(flag, id, uid);
+                    key = "myfans";
                 else
-                    tmp = UserListService.getCare(flag, id, uid);
+                    key = "mycare";
+
+                String url = key + ".php?token=" + Token.token + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                final SysMsg m = URLService.get(url, UserListModel.class);
+                if (!check(m, rf)) {
+                    return;
+                }
+                tmp = ((UserListModel) m).getInner();
 
                 if (flag == 1) {
                     for (int i = 0; i < tmp.size(); i++)
@@ -98,7 +108,7 @@ public class UserList extends Base {
                     for (int i = 0; i < n; i++) {
                         data.removeLast();
                     }
-                } else {
+                } else if (tmp.size() > 0) {
                     data.addAll(tmp);
                     int n = data.size() - cache;
                     for (int i = 0; i < n; i++) {
@@ -108,6 +118,7 @@ public class UserList extends Base {
                 UI(new Runnable() {
                     @Override
                     public void run() {
+                        SmartRefresh(rf);
                         adapter.notifyDataSetChanged();
                     }
                 });

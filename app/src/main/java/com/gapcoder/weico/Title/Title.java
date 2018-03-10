@@ -1,42 +1,43 @@
 package com.gapcoder.weico.Title;
 
-import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Index.Adapter.WeicoAdapter;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.Index.Model.WeicoModel;
-import com.gapcoder.weico.Index.Service.TitleService;
-import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.LinkedList;
 
+import butterknife.BindView;
+
 public class Title extends Base {
 
-    LinkedList<WeicoModel> data=new LinkedList<WeicoModel>();
-    LinkedList<WeicoModel> tmp=new LinkedList<WeicoModel>();
+    LinkedList<WeicoModel.InnerBean> data = new LinkedList<>();
+    LinkedList<WeicoModel.InnerBean> tmp = new LinkedList<>();
     WeicoAdapter adapter;
-     TitleModel.inner title;
-    int cache=10;
-    int id=0;
+    TitleModel.inner title;
+    int cache = 10;
+    int id = 0;
+    @BindView(R.id.timeline)
+    RecyclerView tl;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout rf;
 
 
-    public void setContentView(){
+    public void setContentView() {
         setContentView(R.layout.activity_title);
     }
 
@@ -46,76 +47,74 @@ public class Title extends Base {
     }
 
     @Override
-    public void init(){
+    public void init() {
 
 
-        title=new TitleModel.inner(getIntent().getIntExtra("id",0),getIntent().getStringExtra("title"));
+        title = new TitleModel.inner(getIntent().getIntExtra("id", 0), getIntent().getStringExtra("title"));
         getSupportActionBar().setTitle(title.getTitle());
 
-        adapter=new WeicoAdapter(data,this);
-        RecyclerView tl=(RecyclerView)findViewById(R.id.timeline);
+        adapter = new WeicoAdapter(data, this);
+
         tl.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         tl.setAdapter(adapter);
-        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        rf.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 Refresh(1);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        rf.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
                 Refresh(0);
             }
         });
+        rf.autoRefresh();
         Refresh(1);
-
     }
-    public void Refresh(final int flag){
 
-        if(flag==1){
-            if(data.size()!=0){
-                id=data.get(0).getId();
+    public void Refresh(final int flag) {
+
+        if (flag == 1) {
+            if (data.size() != 0) {
+                id = data.get(0).getId();
             }
-        }else{
-            id=data.get(data.size()-1).getId();
+        } else {
+            id = data.get(data.size() - 1).getId();
         }
-
 
         Pool.run(new Runnable() {
             @Override
             public void run() {
 
+                String url = "weicotitle.php?tid=" + String.valueOf(title.getId()) + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                SysMsg m = URLService.get(url, WeicoModel.class);
+                Log.i("tag", url);
+                if (!check(m, rf)) {
+                    return;
+                }
+                tmp = ((WeicoModel) m).getInner();
 
-               tmp= WeicoTitleService.getList(id,flag,title.getId(),title.getTitle());
-
-                if(tmp.size()==0)
-                    return ;
-
-                if(flag==1) {
+                if (flag == 1) {
                     for (int i = 0; i < tmp.size(); i++)
-                        data.addFirst(tmp.get(tmp.size()-i-1));
+                        data.addFirst(tmp.get(tmp.size() - i - 1));
                     int n = data.size() - cache;
                     for (int i = 0; i < n; i++) {
                         data.removeLast();
                     }
-                }else{
+                } else if (tmp.size() > 0) {
                     data.addAll(tmp);
-                    int n=data.size()-cache;
-                    for(int i=0;i<n;i++){
+                    int n = data.size() - cache;
+                    for (int i = 0; i < n; i++) {
                         data.removeFirst();
                     }
                 }
 
-
-               UI(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
-                       // Toast.makeText(getActivity(),String.valueOf(data.size()),Toast.LENGTH_SHORT).show();
+                        SmartRefresh(rf);
                     }
                 });
             }

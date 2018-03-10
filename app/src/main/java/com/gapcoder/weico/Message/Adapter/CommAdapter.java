@@ -28,9 +28,9 @@ import java.util.LinkedList;
 public class CommAdapter  extends   RecyclerView.Adapter<CommAdapter.SnapViewHolder>{
 
     private Context context;
-    private LinkedList<CommModel> data;
+    private LinkedList<CommModel.InnerBean> data;
 
-    public CommAdapter(LinkedList<CommModel> data, Context context) {
+    public CommAdapter(LinkedList<CommModel.InnerBean> data, Context context) {
         this.data=data;
         this.context = context;
     }
@@ -55,8 +55,7 @@ public class CommAdapter  extends   RecyclerView.Adapter<CommAdapter.SnapViewHol
     @Override
     public void onBindViewHolder(CommAdapter.SnapViewHolder h, int position) {
 
-        CommModel m=data.get(position);
-
+        CommModel.InnerBean m=data.get(position);
         h.name.setText(m.getName());
         h.time.setText(Time.format(m.getTime()));
         h.text.setText(m.getText());

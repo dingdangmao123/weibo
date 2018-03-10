@@ -69,6 +69,7 @@ public class User extends Base {
         i.putExtra("uid", uid);
         startActivity(i);
     }
+
     @OnClick(R.id.fansitem)
     void fans() {
         Intent i = new Intent(this, UserList.class);
@@ -76,6 +77,7 @@ public class User extends Base {
         i.putExtra("type","fans");
         startActivity(i);
     }
+
     @OnClick(R.id.careitem)
     void  care() {
        Intent i = new Intent(this, UserList.class);

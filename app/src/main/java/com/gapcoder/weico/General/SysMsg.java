@@ -7,7 +7,16 @@ package com.gapcoder.weico.General;
 public class SysMsg {
 
     private String code;
+
     private String msg;
+
+    public SysMsg() {
+    }
+
+    public SysMsg(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 
     public String getCode() {
         return code;

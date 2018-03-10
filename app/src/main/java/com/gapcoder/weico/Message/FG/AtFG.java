@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Message.Adapter.AtAdapter;
 import com.gapcoder.weico.Message.Model.AtModel;
-import com.gapcoder.weico.Message.Service.AtService;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
+import com.gapcoder.weico.Utils.Token;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -27,7 +29,7 @@ import java.util.LinkedList;
 
 public class AtFG extends Fragment {
 
-    AtModel data=new AtModel();
+    AtModel.InnerBeanX data=new AtModel.InnerBeanX();
     AtAdapter adapter;
     Handler mh=new Handler();
     int cache = 10;
@@ -36,6 +38,7 @@ public class AtFG extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v=inflater.inflate(R.layout.fragment_at_fg, container, false);
         adapter=new AtAdapter(data,getActivity());
         RecyclerView tl=(RecyclerView)v.findViewById(R.id.timeline);
@@ -64,7 +67,7 @@ public class AtFG extends Fragment {
 
     void Refresh(final int flag) {
 
-        final LinkedList<AtModel.InnerAtModel> list = data.getInner();
+        final LinkedList<AtModel.InnerBeanX.InnerBean> list = data.getInner();
         if (flag == 1) {
             if (list.size() != 0) {
                 id = list.get(0).getId();
@@ -76,13 +79,12 @@ public class AtFG extends Fragment {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-
-                AtModel tmp = AtService.getList(id, flag);
-                if (tmp == null)
-                    return;
-                LinkedList<AtModel.InnerAtModel> c = tmp.getInner();
+                String url = "at.php?token=" + Token.token + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                Log.i("tag",url);
+                final SysMsg m = URLService.get(url, AtModel.class);
+                AtModel.InnerBeanX tmp = ((AtModel)m).getInner();
+                LinkedList<AtModel.InnerBeanX.InnerBean> c = tmp.getInner();
                 data.getUser().putAll(tmp.getUser());
-
                 if (tmp.getInner().size() == 0)
                     return;
 
@@ -100,10 +102,6 @@ public class AtFG extends Fragment {
                         list.removeFirst();
                     }
                 }
-
-                for (int i = 0; i < data.getInner().size(); i++)
-                    Log.i("tag", data.getInner().get(i).toString());
-                Log.i("tag", data.getUser().toString());
 
                 mh.post(new Runnable() {
                     @Override

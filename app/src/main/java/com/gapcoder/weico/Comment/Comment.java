@@ -92,6 +92,12 @@ public class Comment extends Base {
         setContentView(R.layout.activity_comment);
     }
 
+    @OnClick(R.id.likebtn)
+    void like(){
+
+
+    }
+
     @OnClick(R.id.send)
     void send() {
 
@@ -100,10 +106,9 @@ public class Comment extends Base {
             public void run() {
 
                 try {
-                    OkHttpClient cli = new OkHttpClient();
+                /*    OkHttpClient cli = new OkHttpClient();
                     RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", edit.getText().toString()).
                             add("cuid", "" + cuid).add("cid", "" + cid).add("wid", "" + wid).add("hid", "" + m.getUid()).build();
-
                     Request req = new Request.Builder().url("http://10.0.2.2/weico/reply.php").post(rb).build();
                     Response res = cli.newCall(req).execute();
                     final String ok = res.body().string();
@@ -115,7 +120,7 @@ public class Comment extends Base {
                             edit.setText("");
                             hintKeyboard();
                         }
-                    });
+                    });*/
                 } catch (Exception e) {
                     // Toast.makeText(Post.this,e.toString(),Toast.LENGTH_SHORT).show();
                     T.show(Comment.this, e.toString());
@@ -138,19 +143,12 @@ public class Comment extends Base {
     }
 
 
-    @OnClick(R.id.likebtn)
-    void like(){
-
-
-
-    }
-
     @OnClick(R.id.name)
     void jump() {
         if (m == null)
             return;
         Intent i = new Intent(this, User.class);
-        i.putExtra("uid", m.getUid());
+       // i.putExtra("uid", m.getUid());
         startActivity(i);
     }
 
@@ -158,7 +156,7 @@ public class Comment extends Base {
     public void init() {
 
         if ((wid = getIntent().getIntExtra("wid", 0)) != 0)
-            Refresh(1);
+           ;// Refresh(1);
 
         adapter = new CommentAdapter(data, this);
         timeline.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -169,14 +167,14 @@ public class Comment extends Base {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-                Refresh(1);
+               // Refresh(1);
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
-                Refresh(0);
+               // Refresh(0);
             }
         });
         getWeico();
@@ -185,10 +183,10 @@ public class Comment extends Base {
 
     void getWeico() {
 
-        Pool.run(new Runnable() {
+      /*  Pool.run(new Runnable() {
             @Override
-            public void run() {
-                m = WeicoService.getWeico(wid);
+            public void run() {*/
+          /*      m = WeicoService.getWeico(wid);
                 Log.i("tag", m.toString());
                 final Bitmap bit = Curl.getImage(m.getFace());
                 mh.post(new Runnable() {
@@ -206,7 +204,7 @@ public class Comment extends Base {
                     }
                 });
             }
-        });
+        });*/
     }
 
     void Refresh(final int flag) {
@@ -263,7 +261,7 @@ public class Comment extends Base {
         });
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
@@ -273,5 +271,5 @@ public class Comment extends Base {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-    }
+    }*/
 }

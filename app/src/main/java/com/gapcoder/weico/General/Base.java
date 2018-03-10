@@ -7,7 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Utils.T;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.ButterKnife;
 
@@ -61,6 +64,40 @@ public class Base extends AppCompatActivity {
     }
     public void UI(Runnable r){
         runOnUiThread(r);
+    }
+
+    public boolean check(final SysMsg m){
+        if (!m.getCode().equals(Config.SUCCESS)) {
+            UI(new Runnable() {
+                @Override
+                public void run() {
+                    T.show(Base.this, m.getMsg());
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+   public  boolean check(final SysMsg m, final SmartRefreshLayout rf){
+        if (!m.getCode().equals(Config.SUCCESS)) {
+            UI(new Runnable() {
+                @Override
+                public void run() {
+                    SmartRefresh(rf);
+                    T.show(Base.this, m.getMsg());
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+    public  void SmartRefresh(final SmartRefreshLayout rf){
+                    if(rf!=null) {
+                        if(rf.isRefreshing())
+                            rf.finishRefresh(true);
+                        if(rf.isLoading())
+                            rf.finishLoadmore(true);
+                    }
     }
 
 }

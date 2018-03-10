@@ -39,11 +39,11 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
 
     private Context mContext;
 
-    private List<WeicoModel> data;
+    private List<WeicoModel.InnerBean> data;
 
     LinkText parse;
 
-    public WeicoAdapter(List<WeicoModel> data, Context context) {
+    public WeicoAdapter(List<WeicoModel.InnerBean> data, Context context) {
         this.data = data;
         this.mContext = context;
         parse=new LinkText(context);
@@ -75,28 +75,22 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
             }
         });
         return h;
+
     }
 
     @Override
     public void onBindViewHolder(SnapViewHolder h, int position) {
 
-        WeicoModel m=data.get(position);
+        WeicoModel.InnerBean m=data.get(position);
         h.t1.setText(m.getName());
-
-
-
         h.t2.setText(Time.format(m.getTime()));
-        //h.t3.setText("#"+m.getTitle()+"#");
-
         h.t4.setMovementMethod(LinkMovementMethod.getInstance());
         h.t4.setText(parse.parse(m.getText()));
         h.t5.setText(String.valueOf(m.getComment())+"评论");
-        h.t6.setText(String.valueOf(m.getLike()+"赞"));
+        h.t6.setText(String.valueOf(m.getLove()+"赞"));
 
         if(!m.getFace().equals((String)h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.face));
-
-
 
         h.face.setTag(m.getFace());
         Image.down((Activity)mContext,h.face,m.getFace());
@@ -113,18 +107,16 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         ImageView face;
         TextView t1;
         TextView t2;
-        TextView t3;
         TextView t4;
         TextView t5;
         TextView t6;
+
         public SnapViewHolder(View itemView) {
             super(itemView);
 
-            //left.setBackgroundResource(MyColor.get());
             face = (ImageView) itemView.findViewById(R.id.face);
             t1 = (TextView) itemView.findViewById(R.id.name);
             t2 = (TextView) itemView.findViewById(R.id.time);
-            t3 = (TextView) itemView.findViewById(R.id.title);
             t4 = (TextView) itemView.findViewById(R.id.text);
             t5 = (TextView) itemView.findViewById(R.id.comment);
             t6 = (TextView) itemView.findViewById(R.id.like);

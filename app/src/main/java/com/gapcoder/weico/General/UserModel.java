@@ -6,64 +6,53 @@ package com.gapcoder.weico.General;
 
 public class UserModel {
 
-    private int id;
-    private String face;
+
+    /**
+     * id : 1
+     * phone : 18756969783
+     * psd : 7c4a8d09ca3762af61e59520943dc26494f8941b
+     * name : gapcoder
+     * face : http://10.0.2.2/weico/face/f1.jpg
+     * sign : 无招胜有招
+     * place : 安徽 芜湖
+     * bg : http://10.0.2.2/weico/photo/3.jpg
+     * fans : 2
+     * care : 2
+     */
+
+    private String id;
+    private String phone;
+    private String psd;
     private String name;
+    private String face;
     private String sign;
     private String place;
     private String bg;
-    private int fans;
-    private int care;
+    private String fans;
+    private String care;
 
-    public UserModel(int id, String face, String name, String sign, String place, String bg, int fans, int care) {
-        this.id = id;
-        this.face = face;
-        this.name = name;
-        this.sign = sign;
-        this.place = place;
-        this.bg = bg;
-        this.fans = fans;
-        this.care = care;
-    }
-
-    public int getFans() {
-        return fans;
-    }
-
-    public void setFans(int fans) {
-        this.fans = fans;
-    }
-
-    public int getCare() {
-        return care;
-    }
-
-    public void setCare(int care) {
-        this.care = care;
-    }
-
-    public String getBg() {
-        return bg;
-    }
-
-    public void setBg(String bg) {
-        this.bg = bg;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getFace() {
-        return face;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFace(String face) {
-        this.face = face;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPsd() {
+        return psd;
+    }
+
+    public void setPsd(String psd) {
+        this.psd = psd;
     }
 
     public String getName() {
@@ -72,6 +61,14 @@ public class UserModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
     }
 
     public String getSign() {
@@ -90,4 +87,27 @@ public class UserModel {
         this.place = place;
     }
 
+    public String getBg() {
+        return bg;
+    }
+
+    public void setBg(String bg) {
+        this.bg = bg;
+    }
+
+    public String getFans() {
+        return fans;
+    }
+
+    public void setFans(String fans) {
+        this.fans = fans;
+    }
+
+    public String getCare() {
+        return care;
+    }
+
+    public void setCare(String care) {
+        this.care = care;
+    }
 }

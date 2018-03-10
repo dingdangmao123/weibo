@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.MessageModel;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Index.FG.AccountFG;
 import com.gapcoder.weico.Index.FG.TitleFG;
 import com.gapcoder.weico.Index.FG.WeicoFG;
+import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.gapcoder.weico.Message.FG.AtFG;
 import com.gapcoder.weico.Message.FG.CommFG;
 import com.gapcoder.weico.Message.FG.FollowFG;
@@ -45,20 +49,14 @@ public class Message extends Base {
     HashMap<Integer,Fragment> map=new HashMap<>();
     HashSet<Integer> flag=new HashSet<>();
 
-    Handler mh = new Handler();
     @BindView(R.id.title)
     TextView title;
 
-
-    SmartRefreshLayout refreshLayout;
     EasyPopup mCirclePop;
-
     QBadgeView[] msg = new QBadgeView[4];
     TextView[] tv = new TextView[4];
-    MessageModel m;
+    MessageModel.InnerBean m;
 
-
-    int uid = 1;
 
     @Override
     public void setContentView() {
@@ -69,7 +67,6 @@ public class Message extends Base {
     public void init() {
 
         tv[0] = title;
-
         FragmentTransaction tran = fm.beginTransaction();
         Fragment fg= new FollowFG();
         map.put(1,fg);
@@ -84,18 +81,15 @@ public class Message extends Base {
 
     }
     private void hideFragments(FragmentTransaction transaction) {
-
         if(map.size()==0)
             return ;
         Iterator<Fragment> it=map.values().iterator();
         while(it.hasNext()){
             transaction.hide(it.next());
         }
-
     }
 
     void popMenu() {
-
         mCirclePop = new EasyPopup(this)
                 .setContentView(R.layout.messagemenu)
                 .setFocusAndOutsideEnable(true)
@@ -106,7 +100,6 @@ public class Message extends Base {
         tv[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mCirclePop.dismiss();
                 title.setText("新粉丝");
                 msg[1].hide(false);
@@ -117,13 +110,11 @@ public class Message extends Base {
         tv[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mCirclePop.dismiss();
                 title.setText("@我的");
                 msg[2].hide(false);
                 msg[0].hide(false);
                 change(2);
-
             }
         });
         tv[3].setOnClickListener(new View.OnClickListener() {
@@ -151,10 +142,15 @@ public class Message extends Base {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                m = (MessageModel) Curl.getText(Config.url+"message.php?token="+Token.token+"&type=true", MessageModel.class);
-                if (m == null)
+
+                String url ="message.php?token=" + Token.token;
+                SysMsg t = URLService.get(url,  MessageModel.class);
+                Log.i("tag", url);
+                if (!check(t)) {
                     return;
-                mh.post(new Runnable() {
+                }
+                m=((MessageModel)t).getInner();
+                UI(new Runnable() {
                     @Override
                     public void run() {
                         updateBadge();
@@ -162,8 +158,6 @@ public class Message extends Base {
                 });
             }
         });
-
-
     }
 
     void updateBadge() {
@@ -196,8 +190,4 @@ public class Message extends Base {
         return true;
     }
 
-    @Override
-    public void onItemSelected(int id) {
-
-    }
 }

@@ -1,34 +1,24 @@
 package com.gapcoder.weico.Account;
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.UserModel;
 import com.gapcoder.weico.General.UserService;
 import com.gapcoder.weico.Index.Adapter.WeicoAdapter;
 import com.gapcoder.weico.Index.Model.WeicoModel;
-import com.gapcoder.weico.Index.Service.WeicoService;
 import com.gapcoder.weico.R;
-import com.gapcoder.weico.Title.WeicoTitleService;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.LinkedList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class Account extends Base {
 
@@ -36,18 +26,12 @@ public class Account extends Base {
     LinkedList<WeicoModel> tmp=new LinkedList<WeicoModel>();
     WeicoAdapter adapter;
     UserModel m;
-    Handler mh = new Handler();
+
     int cache=10;
     int id=0;
 
-
-
-
-
     @BindView(R.id.bg)
     ImageView bg;
-
-
 
     @BindView(R.id.timeline)
     RecyclerView timeline;
@@ -69,7 +53,7 @@ public class Account extends Base {
         if ((uid = getIntent().getIntExtra("uid", 0)) == 0)
             return ;
 
-
+/*
         adapter=new WeicoAdapter(data,this);
         RecyclerView tl=(RecyclerView)findViewById(R.id.timeline);
         tl.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -79,20 +63,20 @@ public class Account extends Base {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                refreshlayout.finishRefresh(2000*//*,false*//*);//传入false表示刷新失败
                 Refresh(1);
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
+                refreshlayout.finishLoadmore(2000*//*,false*//*);//传入false表示加载失败
                 Refresh(0);
             }
         });
 
         getUser();
-        Refresh(1);
+        Refresh(1);*/
 
     }
     void getUser(){
@@ -119,14 +103,14 @@ public class Account extends Base {
         });
     }
     public void Refresh(final int flag){
-
+/*
         if(flag==1){
             if(data.size()!=0){
                 id=data.get(0).getId();
             }
         }else{
             id=data.get(data.size()-1).getId();
-        }
+        }*/
 
 
         Pool.run(new Runnable() {

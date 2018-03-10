@@ -32,9 +32,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.SnapVi
 
     private Context mContext;
 
-    private List<UserListModel> data;
+    private List<UserListModel.InnerBean> data;
 
-    public UserListAdapter(List<UserListModel> data, Context context) {
+    public UserListAdapter(List<UserListModel.InnerBean> data, Context context) {
         this.data = data;
         this.mContext = context;
     }
@@ -59,7 +59,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.SnapVi
     @Override
     public void onBindViewHolder(UserListAdapter.SnapViewHolder h, int position) {
 
-        UserListModel m = data.get(position);
+        UserListModel.InnerBean m = data.get(position);
         h.name.setText(m.getName());
 
         if(!m.getFace().equals((String)h.face.getTag()))

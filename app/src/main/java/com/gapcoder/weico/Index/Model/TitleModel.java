@@ -12,15 +12,15 @@ import java.util.List;
 public class TitleModel extends SysMsg {
 
 
-    private List<inner> inner;
+    private LinkedList<inner> inner;
 
 
-    public List<inner> getInner() {
+    public LinkedList<inner> getInner() {
         return inner;
     }
 
 
-    public void setInner(List<inner> title) {
+    public void setInner(LinkedList<inner> title) {
         this.inner = title;
     }
 

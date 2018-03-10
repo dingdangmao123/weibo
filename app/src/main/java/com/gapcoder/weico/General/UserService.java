@@ -14,9 +14,7 @@ import okhttp3.Response;
  */
 
 public class UserService {
-
     public static UserModel getUser(int id) {
-
         try {
             OkHttpClient cli = new OkHttpClient();
             Request req = new Request.Builder().url(Config.url+"user.php?id="+String.valueOf(id)).build();
