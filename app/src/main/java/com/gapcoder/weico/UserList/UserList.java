@@ -94,7 +94,7 @@ public class UserList extends Base {
                 else
                     key = "mycare";
 
-                String url = key + ".php?token=" + Token.token + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                String url = key + ".php?uid=" +""+uid+ "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
                 final SysMsg m = URLService.get(url, UserListModel.class);
                 if (!check(m, rf)) {
                     return;

@@ -2,8 +2,6 @@ package com.gapcoder.weico.User;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -13,23 +11,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Account.Account;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.General.UserModel;
-import com.gapcoder.weico.General.UserService;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.UserList.UserList;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
+import com.gapcoder.weico.Utils.Token;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class User extends Base {
 
-    Handler mh = new Handler();
 
+    UserModel.InnerBean user;
     int uid = 0;
 
     @BindView(R.id.toolbar)
@@ -86,6 +86,40 @@ public class User extends Base {
         startActivity(i);
     }
 
+    @OnClick(R.id.add)
+    void  add() {
+        if(user.getFlag()==0)
+            return ;
+
+        Pool.run(new Runnable() {
+            @Override
+            public void run() {
+                final SysMsg m=URLService.get("follow.php?token="+Token.token+"&flag="+""+user.getFlag()+"&id="+""+uid,SysMsg.class);
+
+                UI(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if(m.getCode().equals(Config.SUCCESS)) {
+                            if(user.getFlag()==2) {
+                                Log.i("tag","222");
+                                add.setText("添加关注");
+                                user.setFlag(1);
+                            }else {
+                                Log.i("tag","111");
+                                add.setText("取消关注");
+                                user.setFlag(2);
+                            }
+                        }
+                        T.show(User.this,m.getMsg());
+                    }
+                });
+            }
+        });
+
+    }
+
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_user);
@@ -101,18 +135,31 @@ public class User extends Base {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                final UserModel m = UserService.getUser(uid);
+                String url="user.php?token="+ Token.token+"&id="+uid;
+                final SysMsg m = URLService.get(url, UserModel.class);
+                Log.i("tag",url);
+                user= ((UserModel) m).getInner();
                 UI(new Runnable() {
                     @Override
                     public void run() {
-                        name.setText(m.getName());
-                        fans.setText(String.valueOf(m.getFans()));
-                        care.setText(String.valueOf(m.getCare()));
-                        sign.setText(m.getSign());
-                        place.setText(m.getPlace());
+                        name.setText(user.getName());
+                        fans.setText(String.valueOf(user.getFans()));
+                        care.setText(String.valueOf(user.getCare()));
+                        sign.setText(user.getSign());
+                        place.setText(user.getPlace());
+                        switch(user.getFlag()){
+                            case 0:
+                                add.setText("我");
+                            case 1:
+                                add.setText("加为关注");
+                                break;
+                            case 2:
+                                add.setText("取消关注");
+                                break;
+                        }
                     }
                 });
-                final Bitmap bit = Curl.getImage(m.getFace());
+                final Bitmap bit = Curl.getImage(user.getFace());
                 UI(new Runnable() {
                     @Override
                     public void run() {
@@ -121,7 +168,6 @@ public class User extends Base {
                 });
             }
         });
-
     }
 
     @Override
