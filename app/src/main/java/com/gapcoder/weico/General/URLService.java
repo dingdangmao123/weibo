@@ -33,6 +33,7 @@ public class URLService {
             Request req = new Request.Builder().url(Config.url+url).post(rb.build()).build();
             Response res = cli.newCall(req).execute();
             String json = new String(res.body().bytes(), "utf8");
+            Log.i("tag",json);
             Gson gson = new Gson();
             SysMsg m= gson.fromJson(json, clz);
             return m;
@@ -45,6 +46,7 @@ public class URLService {
     public  static <T extends SysMsg> SysMsg get(String url,Class<T> clz) {
 
         try {
+
             OkHttpClient cli = new OkHttpClient();
             Request req = new Request.Builder().url(Config.url+url).build();
             Response res = cli.newCall(req).execute();
@@ -53,6 +55,7 @@ public class URLService {
             Gson gson = new Gson();
             SysMsg m= gson.fromJson(json, clz);
             return m;
+
         } catch (Exception e) {
 
             Log.i("tag", e.toString());

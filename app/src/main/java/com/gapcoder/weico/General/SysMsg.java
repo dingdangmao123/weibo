@@ -11,6 +11,7 @@ public class SysMsg {
     private String msg;
 
     public SysMsg() {
+
     }
 
     public SysMsg(String code, String msg) {

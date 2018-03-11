@@ -74,27 +74,20 @@ public class Title extends Base {
     }
 
     public void Refresh(final int flag) {
-
-        if (flag == 1) {
-            if (data.size() != 0) {
-                id = data.get(0).getId();
-            }
-        } else {
-            id = data.get(data.size() - 1).getId();
-        }
-
+        Log.i("tag",""+id);
         Pool.run(new Runnable() {
             @Override
             public void run() {
 
-                String url = "weicotitle.php?tid=" + String.valueOf(title.getId()) + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
-                SysMsg m = URLService.get(url, WeicoModel.class);
+                String url = "weicotitle.php?tid=" +title.getId()+"&title="+title.getTitle()+"&flag=" + String.valueOf(flag)+"&id=" + String.valueOf(id);
+                SysMsg m = URLService.get(url, TitleSearchModel.class);
                 Log.i("tag", url);
                 if (!check(m, rf)) {
                     return;
                 }
-                tmp = ((WeicoModel) m).getInner();
-
+                tmp = ((TitleSearchModel) m).getInner().getInner();
+                if(tmp.size()>0)
+                    id=((TitleSearchModel) m).getInner().getId();
                 if (flag == 1) {
                     for (int i = 0; i < tmp.size(); i++)
                         data.addFirst(tmp.get(tmp.size() - i - 1));
@@ -109,6 +102,7 @@ public class Title extends Base {
                         data.removeFirst();
                     }
                 }
+
 
                 UI(new Runnable() {
                     @Override

@@ -31,6 +31,7 @@ public class User extends Base {
 
     UserModel.InnerBean user;
     int uid = 0;
+    String n="";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -94,7 +95,7 @@ public class User extends Base {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                final SysMsg m=URLService.get("follow.php?token="+Token.token+"&flag="+""+user.getFlag()+"&id="+""+uid,SysMsg.class);
+                final SysMsg m=URLService.get("follow.php?token="+Token.token+"&flag="+user.getFlag()+"&id="+user.getId(),SysMsg.class);
 
                 UI(new Runnable() {
                     @Override
@@ -127,15 +128,17 @@ public class User extends Base {
 
     @Override
     public void init() {
-        if ((uid = getIntent().getIntExtra("uid", 0)) != 0)
-            Refresh();
+            uid = getIntent().getIntExtra("uid",0);
+            n=getIntent().getStringExtra("name");
+            if(uid>0||n.length()>0)
+                Refresh();
     }
 
     void Refresh() {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                String url="user.php?token="+ Token.token+"&id="+uid;
+                String url="user.php?token="+ Token.token+"&id="+uid+"&name="+n;
                 final SysMsg m = URLService.get(url, UserModel.class);
                 Log.i("tag",url);
                 user= ((UserModel) m).getInner();

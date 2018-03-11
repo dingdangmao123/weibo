@@ -1,7 +1,6 @@
 package com.gapcoder.weico.Account;
 
 import android.graphics.Bitmap;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +16,6 @@ import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
-import com.gapcoder.weico.Utils.Token;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -130,7 +128,7 @@ public class Account extends Base {
             public void run() {
 
                 String url = "myweico.php?uid=" + uid + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
-                Log.i("tag",url);
+                Log.i("tag", url);
                 SysMsg t = URLService.get(url, WeicoModel.class);
                 if (!check(t, rf)) {
                     return;

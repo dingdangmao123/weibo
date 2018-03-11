@@ -17,20 +17,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.General.WeicoService;
 import com.gapcoder.weico.Index.Model.WeicoModel;
+import com.gapcoder.weico.Message.Model.CommModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.User.User;
+import com.gapcoder.weico.UserList.UserListModel;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.LinkText;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Time;
+import com.gapcoder.weico.Utils.Token;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import butterknife.BindView;
@@ -44,7 +50,7 @@ import okhttp3.Response;
 
 public class Comment extends Base {
 
-    Handler mh = new Handler();
+
     @BindView(R.id.face)
     ImageView face;
     @BindView(R.id.name)
@@ -58,9 +64,9 @@ public class Comment extends Base {
     @BindView(R.id.like)
     TextView like;
     @BindView(R.id.timeline)
-    RecyclerView timeline;
+    RecyclerView tl;
     @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+    SmartRefreshLayout rf;
 
     @BindView(R.id.edit)
     EditText edit;
@@ -70,11 +76,11 @@ public class Comment extends Base {
     @BindView(R.id.likebtn)
     Button likebtn;
 
-    private Comm data = new Comm();
+    private Comm.InnerBean data = new Comm.InnerBean();
     private CommentAdapter adapter;
-    private int wid;
     private LinkText parse = new LinkText(this);
-    WeicoModel m;
+    CommWeicoModel.InnerBean m;
+    int wid;
     int cache = 10;
     int id = 0;
 
@@ -93,9 +99,28 @@ public class Comment extends Base {
     }
 
     @OnClick(R.id.likebtn)
-    void like(){
+    void like() {
+        Pool.run(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("wid", "" + wid);
+                map.put("token", Token.token);
+                map.put("hid", "" + m.getUid());
+                final SysMsg r = URLService.post("praise.php", map, SysMsg.class);
+                if (!check(r, rf)) {
+                    return;
+                }
 
+                UI(new Runnable() {
+                    @Override
+                    public void run() {
+                        T.show(Comment.this, r.getMsg());
+                    }
+                });
 
+            }
+        });
     }
 
     @OnClick(R.id.send)
@@ -105,33 +130,34 @@ public class Comment extends Base {
             @Override
             public void run() {
 
-                try {
-                /*    OkHttpClient cli = new OkHttpClient();
-                    RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", edit.getText().toString()).
-                            add("cuid", "" + cuid).add("cid", "" + cid).add("wid", "" + wid).add("hid", "" + m.getUid()).build();
-                    Request req = new Request.Builder().url("http://10.0.2.2/weico/reply.php").post(rb).build();
-                    Response res = cli.newCall(req).execute();
-                    final String ok = res.body().string();
-                    mh.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            T.show(Comment.this, ok);
-                            edit.setHint("输入评论");
-                            edit.setText("");
-                            hintKeyboard();
-                        }
-                    });*/
-                } catch (Exception e) {
-                    // Toast.makeText(Post.this,e.toString(),Toast.LENGTH_SHORT).show();
-                    T.show(Comment.this, e.toString());
-                }
-                cid = 0;
-                cuid = 0;
+                HashMap<String, String> map = new HashMap<>();
+                map.put("wid", "" + wid);
+                map.put("token", Token.token);
+                map.put("hid", "" + m.getUid());
+                map.put("cid", "" + cid);
+                map.put("cuid", "" + cuid);
+                map.put("text", edit.getText().toString());
 
+                final SysMsg r = URLService.post("reply.php", map, SysMsg.class);
+                if (!check(r, rf)) {
+                    return;
+                }
+
+                cid =0;
+                cuid =0;
+
+                UI(new Runnable() {
+                    @Override
+                    public void run() {
+                        edit.setHint("输入评论");
+                        edit.setText("");
+                        hintKeyboard();
+                        T.show(Comment.this,r.getMsg());
+                    }
+                });
             }
         });
-
-    }
+}
 
     private void hintKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -148,68 +174,73 @@ public class Comment extends Base {
         if (m == null)
             return;
         Intent i = new Intent(this, User.class);
-       // i.putExtra("uid", m.getUid());
+        i.putExtra("uid", m.getUid());
         startActivity(i);
     }
 
     @Override
     public void init() {
 
-        if ((wid = getIntent().getIntExtra("wid", 0)) != 0)
-           ;// Refresh(1);
+        if ((wid = getIntent().getIntExtra("wid", 0)) == 0) {
+            T.show(this, "参数错误");
+            return;
+        }
 
         adapter = new CommentAdapter(data, this);
-        timeline.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        timeline.setAdapter(adapter);
-        timeline.setNestedScrollingEnabled(false);
+        tl.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        tl.setAdapter(adapter);
+        tl.setNestedScrollingEnabled(false);
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        rf.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-               // Refresh(1);
+                getWeico();
+                Refresh(1);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        rf.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
-               // Refresh(0);
+                Refresh(0);
             }
         });
         getWeico();
+        Refresh(1);
     }
 
 
     void getWeico() {
 
-      /*  Pool.run(new Runnable() {
+        Pool.run(new Runnable() {
             @Override
-            public void run() {*/
-          /*      m = WeicoService.getWeico(wid);
-                Log.i("tag", m.toString());
+            public void run() {
+
+                String url = "get.php?wid=" + wid;
+                final SysMsg t = URLService.get(url, CommWeicoModel.class);
+                if (!check(t, rf)) {
+                    return;
+                }
+                m = ((CommWeicoModel) t).getInner();
                 final Bitmap bit = Curl.getImage(m.getFace());
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
-
                         face.setImageBitmap(bit);
                         name.setText(m.getName());
                         time.setText(Time.format(m.getTime()));
-
                         text.setMovementMethod(LinkMovementMethod.getInstance());
                         text.setText(parse.parse(m.getText()));
                         comment.setText(String.valueOf(m.getComment()) + "评论");
-                        like.setText(String.valueOf(m.getLike() + "赞"));
+                        like.setText(String.valueOf(m.getLove() + "赞"));
                     }
                 });
             }
-        });*/
+        });
     }
 
     void Refresh(final int flag) {
 
-        final LinkedList<CommentModel> list = data.getComment();
+        final LinkedList<Comm.InnerBean.CommentBean> list = data.getComment();
         if (flag == 1) {
             if (list.size() != 0) {
                 id = list.get(0).getId();
@@ -222,15 +253,14 @@ public class Comment extends Base {
             @Override
             public void run() {
 
-                Comm tmp = CommentService.getList(wid, id, flag);
-                if (tmp == null)
+                String url = "comment.php?wid=" + wid + "&flag=" + flag + "&id=" + id;
+                final SysMsg t = URLService.get(url, Comm.class);
+                if (!check(t, rf)) {
                     return;
-                LinkedList<CommentModel> c = tmp.getComment();
+                }
+                Comm.InnerBean tmp = ((Comm) t).getInner();
                 data.getUser().putAll(tmp.getUser());
-
-                if (tmp.getComment().size() == 0)
-                    return;
-
+                LinkedList<Comm.InnerBean.CommentBean> c = tmp.getComment();
                 if (flag == 1) {
                     for (int i = 0; i < c.size(); i++)
                         list.addFirst(c.get(c.size() - i - 1));
@@ -238,22 +268,18 @@ public class Comment extends Base {
                     for (int i = 0; i < n; i++) {
                         list.removeLast();
                     }
-                } else {
+                } else if (tmp.getComment().size() > 0) {
                     list.addAll(c);
                     int n = list.size() - cache;
                     for (int i = 0; i < n; i++) {
                         list.removeFirst();
                     }
                 }
-                Log.i("tag", "---------");
-                for (int i = 0; i < data.getComment().size(); i++)
-                    Log.i("tag", data.getComment().get(i).toString());
 
-                Log.i("tag", data.getUser().toString());
-                Log.i("tag", "---------");
-                mh.post(new Runnable() {
+                UI(new Runnable() {
                     @Override
                     public void run() {
+                        SmartRefresh(rf);
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -261,15 +287,9 @@ public class Comment extends Base {
         });
     }
 
-   /* @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }*/
 }

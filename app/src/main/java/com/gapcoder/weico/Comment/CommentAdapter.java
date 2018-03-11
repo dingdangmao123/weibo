@@ -36,11 +36,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
     private Context mContext;
 
     private Reply reply;
-    private LinkedList<CommentModel> comment;
-    private HashMap<Integer,Comm.UserBean> user;
+    private LinkedList<Comm.InnerBean.CommentBean> comment;
+    private HashMap<Integer,Comm.InnerBean.UserBean> user;
 
 
-    public CommentAdapter(Comm data, Context context) {
+    public CommentAdapter(Comm.InnerBean data, Context context) {
 
         comment=data.getComment();
         user=data.getUser();
@@ -76,7 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
 
     @Override
     public void onBindViewHolder(CommentAdapter.SnapViewHolder h, int position) {
-        CommentModel m = comment.get(position);
+        Comm.InnerBean.CommentBean m = comment.get(position);
         String face=user.get(m.getUid()).getFace();
         Log.i("adapter",m.getText());
         Log.i("adapter",user.get(m.getUid()).getName());

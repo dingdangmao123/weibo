@@ -8,13 +8,19 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gapcoder.weico.Comment.Comment;
 import com.gapcoder.weico.General.Base;
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
+import com.gapcoder.weico.Utils.Token;
 import com.shuyu.textutillib.EmojiLayout;
 import com.shuyu.textutillib.RichEditBuilder;
 import com.shuyu.textutillib.RichEditText;
 import com.shuyu.textutillib.listener.OnEditTextUtilJumpListener;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +32,6 @@ import okhttp3.Response;
 
 public class Post extends Base {
 
-    Handler mh = new Handler();
     @BindView(R.id.text)
     EditText text;
 
@@ -44,21 +49,20 @@ public class Post extends Base {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                try {
-                    OkHttpClient cli = new OkHttpClient();
-                    RequestBody rb = new FormBody.Builder().add("uid", "1").add("text", text.getText().toString()).build();
-                    Request req = new Request.Builder().url(Config.url + "post.php").post(rb).build();
-                    Response res = cli.newCall(req).execute();
-                    final String ok = res.body().string();
-                    UI(new Runnable() {
-                        @Override
-                        public void run() {
-                            T.show(Post.this, ok);
-                        }
-                    });
-                } catch (Exception e) {
-                    T.show(Post.this, e.toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("token", Token.token);
+                map.put("text", "" +text.getText().toString());
+                final SysMsg r = URLService.post("post.php", map, SysMsg.class);
+                if (!check(r,null)) {
+                    return;
                 }
+                UI(new Runnable() {
+                    @Override
+                    public void run() {
+                        T.show(Post.this, r.getMsg());
+                        text.setText("");
+                    }
+                });
             }
         });
     }

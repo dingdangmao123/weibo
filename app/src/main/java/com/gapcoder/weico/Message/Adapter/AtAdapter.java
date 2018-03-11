@@ -11,19 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gapcoder.weico.Comment.Comm;
 import com.gapcoder.weico.Comment.Comment;
-import com.gapcoder.weico.Comment.CommentModel;
 import com.gapcoder.weico.Message.Model.AtModel;
-import com.gapcoder.weico.Message.Model.FollowModel;
 import com.gapcoder.weico.R;
-import com.gapcoder.weico.User.User;
 import com.gapcoder.weico.Utils.Image;
 import com.gapcoder.weico.Utils.Time;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by suxiaohui on 2018/3/7.

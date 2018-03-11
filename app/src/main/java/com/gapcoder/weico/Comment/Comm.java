@@ -1,9 +1,9 @@
 package com.gapcoder.weico.Comment;
 
+import com.gapcoder.weico.General.SysMsg;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,87 +11,155 @@ import java.util.List;
  * Created by suxiaohui on 2018/3/6.
  */
 
-public class Comm {
-
-    private LinkedList<CommentModel> comment;
-    private HashMap<Integer,UserBean> user;
+public class Comm extends SysMsg{
 
 
+    /**
+     * code : OK
+     * msg :
+     * inner : {"comment":[{"id":"8","wid":"27","hid":"1","uid":"1","oid":"0","text":"baby you are a rich man ","time":"1520347290"},{"id":"7","wid":"27","hid":"1","uid":"1","oid":"3","text":"this is how we do it ","time":"1520344893"},{"id":"6","wid":"27","hid":"1","uid":"1","oid":"0","text":"hello world ","time":"1520344871"},{"id":"5","wid":"27","hid":"1","uid":"1","oid":"0","text":"hello world ","time":"1520344848"}],"user":{"1":{"name":"gapcoder","face":"http://10.0.2.2/weico/face/f1.jpg"},"3":{"name":"张无忌","face":"http://10.0.2.2/weico/face/f3.jpg"}}}
+     */
+
+    private InnerBean inner;
 
 
-    @Override
-    public String toString() {
-
-        String s="";
-        for(int i=0;i<comment.size();i++)
-            s=s+comment.get(i);
-        Iterator<Integer> it=user.keySet().iterator();
-        while(it.hasNext()){
-            UserBean b=user.get(it.next());
-            s=s+"["+it.next()+":"+b+"]";
-        }
-        return s;
+    public InnerBean getInner() {
+        return inner;
     }
 
-    public Comm(LinkedList<CommentModel> comment, HashMap<Integer, UserBean> user) {
-        this.comment = comment;
-        this.user = user;
+    public void setInner(InnerBean inner) {
+        this.inner = inner;
     }
 
-    public Comm() {
-        this.comment = new LinkedList<CommentModel>();
-        this.user = new HashMap<Integer,UserBean>();
-    }
+    public static class InnerBean {
+        /**
+         * comment : [{"id":"8","wid":"27","hid":"1","uid":"1","oid":"0","text":"baby you are a rich man ","time":"1520347290"},{"id":"7","wid":"27","hid":"1","uid":"1","oid":"3","text":"this is how we do it ","time":"1520344893"},{"id":"6","wid":"27","hid":"1","uid":"1","oid":"0","text":"hello world ","time":"1520344871"},{"id":"5","wid":"27","hid":"1","uid":"1","oid":"0","text":"hello world ","time":"1520344848"}]
+         * user : {"1":{"name":"gapcoder","face":"http://10.0.2.2/weico/face/f1.jpg"},"3":{"name":"张无忌","face":"http://10.0.2.2/weico/face/f3.jpg"}}
+         */
 
+        private HashMap<Integer,UserBean> user;
+        private LinkedList<CommentBean> comment;
 
-    public LinkedList<CommentModel> getComment() {
-        return comment;
-    }
-
-    public void setComment(LinkedList<CommentModel> comment) {
-        this.comment = comment;
-    }
-
-    public HashMap<Integer, UserBean> getUser() {
-        return user;
-    }
-
-    public void setUser(HashMap<Integer, UserBean> user) {
-        this.user = user;
-    }
-
-    public static class  UserBean{
-        private String name;
-        private String face;
-
-        public UserBean(String name, String face) {
-            this.name = name;
-            this.face = face;
+        public InnerBean() {
+            comment=new LinkedList<>();
+            user=new HashMap<>();
         }
 
-
-        public String getName() {
-            return name;
+        public HashMap<Integer, UserBean> getUser() {
+            return user;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setUser(HashMap<Integer, UserBean> user) {
+            this.user = user;
         }
 
-        public String getFace() {
-            return face;
+        public LinkedList<CommentBean> getComment() {
+            return comment;
         }
 
-        public void setFace(String face) {
-            this.face = face;
+        public void setComment(LinkedList<CommentBean> comment) {
+            this.comment = comment;
         }
 
-        @Override
-        public String toString() {
-            return "UserBean{" +
-                    "name='" + name + '\'' +
-                    ", face='" + face + '\'' +
-                    '}';
+        public static class UserBean {
+            /**
+             * 1 : {"name":"gapcoder","face":"http://10.0.2.2/weico/face/f1.jpg"}
+             * 3 : {"name":"张无忌","face":"http://10.0.2.2/weico/face/f3.jpg"}
+             */
+            private String name;
+            private String face;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getFace() {
+                return face;
+            }
+
+            public void setFace(String face) {
+                this.face = face;
+            }
+        }
+
+        public static class CommentBean {
+            /**
+             * id : 8
+             * wid : 27
+             * hid : 1
+             * uid : 1
+             * oid : 0
+             * text : baby you are a rich man
+             * time : 1520347290
+             */
+
+            private int id;
+            private int wid;
+            private int hid;
+            private int uid;
+            private int oid;
+            private String text;
+            private int time;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public int getWid() {
+                return wid;
+            }
+
+            public void setWid(int wid) {
+                this.wid = wid;
+            }
+
+            public int getHid() {
+                return hid;
+            }
+
+            public void setHid(int hid) {
+                this.hid = hid;
+            }
+
+            public int getUid() {
+                return uid;
+            }
+
+            public void setUid(int uid) {
+                this.uid = uid;
+            }
+
+            public int getOid() {
+                return oid;
+            }
+
+            public void setOid(int oid) {
+                this.oid = oid;
+            }
+
+            public String getText() {
+                return text;
+            }
+
+            public void setText(String text) {
+                this.text = text;
+            }
+
+            public int getTime() {
+                return time;
+            }
+
+            public void setTime(int time) {
+                this.time = time;
+            }
         }
     }
 }
