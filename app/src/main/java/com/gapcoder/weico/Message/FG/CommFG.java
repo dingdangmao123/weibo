@@ -71,7 +71,7 @@ public class CommFG extends BaseFG {
                 Refresh(0);
             }
         });
-        Refresh(1);
+        rf.autoRefresh();
 
     }
 

@@ -71,7 +71,6 @@ public class UserList extends Base {
                 Refresh(0);
             }
         });
-        Refresh(1);
         rf.autoRefresh();
 
     }

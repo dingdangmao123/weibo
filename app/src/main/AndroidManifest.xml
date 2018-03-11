@@ -46,10 +46,10 @@
         <activity
             android:name=".Message.Message"
             android:label="" />
-        <activity android:name=".Login.Login">
-
-
-        </activity>
+        <activity android:name=".Login.Login"></activity>
+        <activity android:name=".Change.Change"
+            android:label=""
+            ></activity>
     </application>
 
 </manifest>

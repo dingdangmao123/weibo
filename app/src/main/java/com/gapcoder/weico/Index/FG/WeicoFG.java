@@ -162,8 +162,6 @@ public class WeicoFG extends BaseFG {
             }
         });
         rf.autoRefresh();
-        Refresh(1);
-        getMessage();
     }
 
     void getMessage() {

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Account.Account;
+import com.gapcoder.weico.Change.Change;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.General.UserModel;
@@ -27,10 +28,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class AccountFG extends BaseFG {
 
     UserModel.InnerBean user;
+
+    final int PLACE=0;
+    final int SIGN=1;
 
     @BindView(R.id.face)
     ImageView face;
@@ -55,6 +61,28 @@ public class AccountFG extends BaseFG {
     @BindView(R.id.weicoitem)
     LinearLayout weicoitem;
     Unbinder unbinder;
+
+
+
+    @OnClick(R.id.placeitem)
+    void place(){
+
+            Intent i=new Intent(getActivity(),Change.class);
+            i.putExtra("key","place");
+            i.putExtra("title","地区");
+            i.putExtra("text",place.getText().toString());
+            startActivityForResult(i,PLACE);
+    }
+
+
+    @OnClick(R.id.signitem)
+    void sign(){
+        Intent i=new Intent(getActivity(),Change.class);
+        i.putExtra("key","sign");
+        i.putExtra("title","签名");
+        i.putExtra("text",sign.getText().toString());
+        startActivityForResult(i,SIGN);
+    }
 
     @OnClick(R.id.weicoitem)
     void jump() {
@@ -123,5 +151,24 @@ public class AccountFG extends BaseFG {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String res=data.getStringExtra("text");
+        switch(requestCode){
+            case PLACE:
+                if(resultCode==RESULT_OK){
+                    place.setText(res);
+                    user.setPlace(res);
+                }
+                break;
+            case SIGN:
+                if(resultCode==RESULT_OK){
+                    sign.setText(res);
+                    user.setSign(res);
+                }
+                break;
 
+        }
+
+    }
 }

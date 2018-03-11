@@ -62,9 +62,15 @@
 
                     <TextView
                         android:id="@+id/care"
+                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <Button
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
 
                 </LinearLayout>
                 <View android:layout_height="1dp"
@@ -87,10 +93,14 @@
 
                     <TextView
                         android:id="@+id/fans"
+                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
+                    <Button
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
                 </LinearLayout>
                 <View android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
@@ -110,9 +120,14 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/place"
+                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <Button
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
                 </LinearLayout>
 
                 <View android:layout_height="1dp"
@@ -135,9 +150,15 @@
 
                     <TextView
                         android:id="@+id/sign"
+                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <Button
+                        android:layout_gravity="end"
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
                 </LinearLayout>
                 <View android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
@@ -154,8 +175,14 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="我的微博"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <Button
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+
                 </LinearLayout>
                 <View android:layout_height="1dp"
                     android:layout_marginLeft="15dp"

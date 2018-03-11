@@ -47,12 +47,7 @@ public class BaseFG extends Fragment {
             UI(new Runnable() {
                 @Override
                 public void run() {
-                    if(rf!=null) {
-                        if(rf.isRefreshing())
-                            rf.finishRefresh(false);
-                        if(rf.isLoading())
-                            rf.finishLoadmore(false);
-                    }
+                   SmartRefresh(rf);
                     T.show(getActivity(), m.getMsg());
                 }
             });
@@ -69,5 +64,14 @@ public class BaseFG extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binder.unbind();
+    }
+
+    public void SmartRefresh(SmartRefreshLayout rf){
+        if(rf!=null) {
+            if(rf.isRefreshing())
+                rf.finishRefresh(true);
+            if(rf.isLoading())
+                rf.finishLoadmore(true);
+        }
     }
 }

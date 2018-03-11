@@ -40,21 +40,24 @@ public class LinkText {
 
     public  CharSequence parse(String text){
         SpannableString span= new SpannableString(text);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#0099EE"));
+
 
         Matcher m=T.matcher(text);
         while(m.find()) {
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#0099EE"));
             span.setSpan(colorSpan, m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             span.setSpan(new LinkSpan(m.group()), m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         m=W.matcher(text);
         while(m.find()) {
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#0099EE"));
             span.setSpan(colorSpan, m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             span.setSpan(new LinkSpan(m.group()), m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         m=U.matcher(text);
         while(m.find()) {
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#0099EE"));
             span.setSpan(colorSpan, m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             span.setSpan(new LinkSpan(m.group()), m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }

@@ -114,8 +114,8 @@
                     <Button
                         android:id="@+id/likebtn"
                         android:background="@mipmap/ic_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
                 </LinearLayout>
             </LinearLayout>
             </LinearLayout>

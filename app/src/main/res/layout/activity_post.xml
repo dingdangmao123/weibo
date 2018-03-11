@@ -49,8 +49,4 @@
            android:ems="10"
             />
    </LinearLayout>
-
-
-
-
 </android.support.design.widget.CoordinatorLayout>
