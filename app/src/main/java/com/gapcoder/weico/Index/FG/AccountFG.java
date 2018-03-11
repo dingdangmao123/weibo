@@ -62,7 +62,7 @@ public class AccountFG extends BaseFG {
     LinearLayout weicoitem;
     Unbinder unbinder;
 
-
+    boolean flag=false;
 
     @OnClick(R.id.placeitem)
     void place(){
@@ -118,7 +118,16 @@ public class AccountFG extends BaseFG {
     @Override
     public void CreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState, View v) {
-        Refresh();
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!flag)
+        {
+            flag=true;
+            Refresh();
+        }
     }
 
 

@@ -13,6 +13,7 @@ import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.Message.Adapter.CommAdapter;
+import com.gapcoder.weico.Message.Message;
 import com.gapcoder.weico.Message.Model.CommModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
@@ -45,8 +46,8 @@ public class CommFG extends BaseFG {
     RecyclerView tl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout rf;
-    Unbinder unbinder;
 
+    boolean flag=false;
 
     @Override
     View init(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class CommFG extends BaseFG {
     @Override
     public void CreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState, View v) {
+
         adapter = new CommAdapter(data, getActivity());
         tl.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         tl.setAdapter(adapter);
@@ -71,8 +73,18 @@ public class CommFG extends BaseFG {
                 Refresh(0);
             }
         });
-        rf.autoRefresh();
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!flag)
+        {
+            flag=true;
+            rf.autoRefresh();
+        }
     }
 
     void Refresh(final int flag) {
@@ -86,6 +98,7 @@ public class CommFG extends BaseFG {
             id = data.get(data.size() - 1).getId();
         }
 
+        //((Message)getActivity()).getMessage();
         Pool.run(new Runnable() {
             @Override
             public void run() {
@@ -131,19 +144,5 @@ public class CommFG extends BaseFG {
         });
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }
 

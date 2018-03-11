@@ -16,6 +16,7 @@ import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Message.Adapter.AtAdapter;
 import com.gapcoder.weico.Message.Adapter.CommAdapter;
+import com.gapcoder.weico.Message.Message;
 import com.gapcoder.weico.Message.Model.AtModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
@@ -47,6 +48,8 @@ public class AtFG extends BaseFG {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout rf;
 
+    boolean flag=false;
+
     @Override
     View init(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_at_fg, container, false);
@@ -72,10 +75,18 @@ public class AtFG extends BaseFG {
                 Refresh(0);
             }
         });
-        rf.autoRefresh();
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!flag)
+        {
+            flag=true;
+            rf.autoRefresh();
+        }
+    }
 
     void Refresh(final int flag) {
 
@@ -87,7 +98,7 @@ public class AtFG extends BaseFG {
         } else {
             id = data.getInner().get(list.size() - 1).getId();
         }
-
+        //((Message)getActivity()).getMessage();
         Pool.run(new Runnable() {
             @Override
             public void run() {

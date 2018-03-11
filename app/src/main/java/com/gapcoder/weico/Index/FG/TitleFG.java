@@ -34,7 +34,7 @@ public class TitleFG extends BaseFG {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout rf;
 
-
+    boolean flag=false;
     public TitleFG() {
 
     }
@@ -61,7 +61,16 @@ public class TitleFG extends BaseFG {
                 rf.finishLoadmore();
             }
         });
-        rf.autoRefresh();
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!flag)
+        {
+            flag=true;
+            rf.autoRefresh();
+        }
     }
 
     public void Refresh() {

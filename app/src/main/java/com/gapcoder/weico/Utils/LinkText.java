@@ -61,22 +61,18 @@ public class LinkText {
             span.setSpan(colorSpan, m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             span.setSpan(new LinkSpan(m.group()), m.start(), m.end(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
         return span;
     }
 
     class LinkSpan extends ClickableSpan {
 
         String content;
-
         public LinkSpan(String content) {
             this.content = content;
         }
 
         @Override
         public void onClick(View v) {
-
-
             Log.i("tag",content);
             Intent i=null;
             if(content.startsWith("@")) {

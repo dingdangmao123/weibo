@@ -57,6 +57,7 @@ public class Message extends Base {
     TextView[] tv = new TextView[4];
     MessageModel.InnerBean m;
 
+    public int cur=-1;
 
     @Override
     public void setContentView() {
@@ -77,7 +78,13 @@ public class Message extends Base {
         tran.commit();
 
         popMenu();
-        getMessage();
+        Pool.run(new Runnable() {
+            @Override
+            public void run() {
+                getMessage();
+            }
+        });
+
 
     }
     private void hideFragments(FragmentTransaction transaction) {
@@ -103,7 +110,8 @@ public class Message extends Base {
                 mCirclePop.dismiss();
                 title.setText("新粉丝");
                 msg[1].hide(false);
-                msg[0].hide(false);
+                //msg[0].hide(false);
+                cur=1;
                 change(1);
             }
         });
@@ -113,7 +121,8 @@ public class Message extends Base {
                 mCirclePop.dismiss();
                 title.setText("@我的");
                 msg[2].hide(false);
-                msg[0].hide(false);
+                //msg[0].hide(false);
+                cur=2;
                 change(2);
             }
         });
@@ -123,7 +132,8 @@ public class Message extends Base {
                 mCirclePop.dismiss();
                 title.setText("评论回复");
                 msg[3].hide(false);
-                msg[0].hide(false);
+                //msg[0].hide(false);
+                cur=3;
                 change(3);
             }
         });
@@ -138,7 +148,7 @@ public class Message extends Base {
         tran.show(map.get(n));
         tran.commit();
     }
-    void getMessage() {
+    public  void getMessage() {
         Pool.run(new Runnable() {
             @Override
             public void run() {
@@ -162,7 +172,7 @@ public class Message extends Base {
 
     void updateBadge() {
 
-        badge(0, m.getTotal());
+        //badge(0, m.getTotal());
         badge(1, m.getFollow());
         badge(2, m.getAt());
         badge(3, m.getComment());
