@@ -46,10 +46,15 @@
         <activity
             android:name=".Message.Message"
             android:label="" />
-        <activity android:name=".Login.Login"></activity>
-        <activity android:name=".Change.Change"
-            android:label=""
-            ></activity>
+        <activity android:name=".Login.Login" />
+        <activity
+            android:name=".Change.Change"
+            android:label="" />
+
+        <service
+            android:name=".MessageService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

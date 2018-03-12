@@ -44,7 +44,6 @@ public class WeicoFG extends BaseFG {
     LinkedList<WeicoModel.InnerBean> tmp = new LinkedList<>();
     WeicoAdapter adapter;
     QBadgeView msg;
-    QBadgeView bar;
     String type = "new";
     boolean reset = false;
     int current = 1;
@@ -55,7 +54,7 @@ public class WeicoFG extends BaseFG {
     RecyclerView tl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout rf;
-    Unbinder unbinder;
+
     @BindView(R.id.msg)
     TextView target;
     @BindView(R.id.weicoTitle)
@@ -77,7 +76,6 @@ public class WeicoFG extends BaseFG {
             @Override
             public void onClick(View v) {
                 msg.hide(false);
-                bar.hide(false);
                 Intent i = new Intent(getActivity(), Message.class);
                 startActivity(i);
 
@@ -153,7 +151,6 @@ public class WeicoFG extends BaseFG {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 Refresh(1);
-                getMessage();
             }
         });
         rf.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -162,9 +159,15 @@ public class WeicoFG extends BaseFG {
                 Refresh(0);
             }
         });
+        msg = new QBadgeView(getActivity());
+        msg.bindTarget(target).setBadgeGravity(Gravity.END | Gravity.TOP);
+        getMessage();
         rf.autoRefresh();
     }
 
+    public void message(int num){
+        msg.setBadgeNumber(-num);
+    }
     void getMessage() {
         Pool.run(new Runnable() {
             @Override
@@ -173,40 +176,12 @@ public class WeicoFG extends BaseFG {
                 if (m == null)
                     return;
                 final int num = m.getInner().getTotal();
-                if (msg == null) {
-                    UI(new Runnable() {
-                        @Override
-                        public void run() {
-                            msg = new QBadgeView(getActivity());
-                            msg.bindTarget(target).setBadgeGravity(Gravity.END | Gravity.TOP);
-                        }
-                    });
-                }
-                if(bar==null){
-                    UI(new Runnable() {
-                        @Override
-                        public void run() {
-                            bar = new QBadgeView(getActivity());
-                            bar.bindTarget(getActivity().findViewById(R.id.weico)).setBadgeGravity(Gravity.CENTER);
-                            bar.setGravityOffset(15,true);
-                        }
-                    });
-                }
-                if (num <= 0) {
-                    UI(new Runnable() {
-                        @Override
-                        public void run() {
-                            msg.hide(false);bar.hide(false);
-                        }
-                    });
-                } else {
-                    UI(new Runnable() {
-                        @Override
-                        public void run() {
-                            msg.setBadgeNumber(-1);bar.setBadgeNumber(-1);
-                        }
-                    });
-                }
+                UI(new Runnable() {
+                    @Override
+                    public void run() {
+                        message(num);
+                    }
+                });
             }
         });
     }
