@@ -102,6 +102,7 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
 
         h.Grid.setAdapter(mAdapter);
         h.Grid.setImagesData(new ArrayList(Arrays.asList(m.getPhoto().split(","))));
+
         if(m.getPhoto().length()==0){
             h.Grid.setVisibility(View.GONE);
         }else{

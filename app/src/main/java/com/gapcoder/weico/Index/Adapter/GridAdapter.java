@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Utils.Image;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
@@ -23,8 +24,8 @@ public class GridAdapter extends NineGridImageViewAdapter<String> {
     @Override
     protected void onDisplayImage(Context context, ImageView iv, String photo) {
         iv.setTag(photo);
-        Log.i("tag", photo);
-        Image.down((Activity) context, iv, photo);
+        Log.i("tag", Config.url+"photo/"+photo);
+        Image.down((Activity) context, iv, Config.url+"photo/"+photo);
     }
 
     @Override
