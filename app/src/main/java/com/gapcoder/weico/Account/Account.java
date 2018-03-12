@@ -94,12 +94,6 @@ public class Account extends Base {
                     return;
                 }
                 m = ((UserModel) t).getInner();
-                UI(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
                 final Bitmap f = Curl.getImage(m.getFace());
                 final Bitmap b = Curl.getImage(m.getBg());
                 UI(new Runnable() {
