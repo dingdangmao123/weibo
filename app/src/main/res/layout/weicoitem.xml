@@ -63,11 +63,11 @@
                     android:id="@+id/NineGrid"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="0dp"
                     android:layout_width="match_parent"
                     app:imgGap="4dp"
-                    app:showStyle="fill"
-                    app:singleImgSize="120dp"/>
+                    app:singleImgSize="150dp"
+                    app:showStyle="fill"/>
             </LinearLayout>
 
             <LinearLayout

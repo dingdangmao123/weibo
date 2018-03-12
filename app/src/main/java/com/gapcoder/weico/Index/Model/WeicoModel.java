@@ -41,6 +41,7 @@ public class WeicoModel extends SysMsg{
         private int time;
         private int comment;
         private int love;
+        private String photo;
 
         public int getId() {
             return id;
@@ -104,6 +105,14 @@ public class WeicoModel extends SysMsg{
 
         public void setLove(int love) {
             this.love = love;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
         }
     }
 

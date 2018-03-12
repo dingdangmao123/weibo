@@ -79,7 +79,7 @@ public class Title extends Base {
             @Override
             public void run() {
 
-                String url = "weicotitle.php?tid=" +title.getId()+"&title="+title.getTitle()+"&flag=" + String.valueOf(flag)+"&id=" + String.valueOf(id);
+                String url = "weicotitle.php?tid=" +title.getId()+"&title="+title.getTitle()+"&flag=" + flag+"&id=" + id;
                 SysMsg m = URLService.get(url, TitleSearchModel.class);
                 Log.i("tag", url);
                 if (!check(m, rf)) {

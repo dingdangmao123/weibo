@@ -1,18 +1,23 @@
 package com.gapcoder.weico.Index.FG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Index.Adapter.TitleAdapter;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Title.Title;
 import com.gapcoder.weico.Utils.Pool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -23,6 +28,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class TitleFG extends BaseFG {
 
@@ -34,7 +41,13 @@ public class TitleFG extends BaseFG {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout rf;
 
-    boolean flag=false;
+
+    boolean flag = false;
+    @BindView(R.id.search)
+    SearchView search;
+
+
+
     public TitleFG() {
 
     }
@@ -61,14 +74,23 @@ public class TitleFG extends BaseFG {
                 rf.finishLoadmore();
             }
         });
-
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override public boolean onQueryTextSubmit(String s) {
+                Intent i=new Intent(getActivity(),Title.class);
+                i.putExtra("title",s);
+                getActivity().startActivity(i);
+                return false;
+            }
+            @Override public boolean onQueryTextChange(String s) {
+                return false;
+            } });
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        if(!flag)
-        {
-            flag=true;
+        if (!flag) {
+            flag = true;
             rf.autoRefresh();
         }
     }
@@ -101,4 +123,11 @@ public class TitleFG extends BaseFG {
             }
         });
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
+    }
+
 }

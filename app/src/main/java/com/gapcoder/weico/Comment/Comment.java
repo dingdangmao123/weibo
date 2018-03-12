@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,34 +18,29 @@ import android.widget.TextView;
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
-import com.gapcoder.weico.General.WeicoService;
-import com.gapcoder.weico.Index.Model.WeicoModel;
-import com.gapcoder.weico.Message.Model.CommModel;
+import com.gapcoder.weico.Index.Adapter.GridAdapter;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.User.User;
-import com.gapcoder.weico.UserList.UserListModel;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.LinkText;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Time;
 import com.gapcoder.weico.Utils.Token;
+import com.jaeger.ninegridimageview.NineGridImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class Comment extends Base {
 
@@ -75,6 +69,8 @@ public class Comment extends Base {
     Button send;
     @BindView(R.id.likebtn)
     Button likebtn;
+    @BindView(R.id.NineGrid)
+    NineGridImageView NineGrid;
 
     private Comm.InnerBean data = new Comm.InnerBean();
     private CommentAdapter adapter;
@@ -143,8 +139,8 @@ public class Comment extends Base {
                     return;
                 }
 
-                cid =0;
-                cuid =0;
+                cid = 0;
+                cuid = 0;
 
                 UI(new Runnable() {
                     @Override
@@ -152,12 +148,12 @@ public class Comment extends Base {
                         edit.setHint("输入评论");
                         edit.setText("");
                         hintKeyboard();
-                        T.show(Comment.this,r.getMsg());
+                        T.show(Comment.this, r.getMsg());
                     }
                 });
             }
         });
-}
+    }
 
     private void hintKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -232,6 +228,12 @@ public class Comment extends Base {
                         text.setText(parse.parse(m.getText()));
                         comment.setText(String.valueOf(m.getComment()) + "评论");
                         like.setText(String.valueOf(m.getLove() + "赞"));
+                        if(m.getPhoto().length()==0)
+                            NineGrid.setVisibility(View.GONE);
+                        else{
+                            NineGrid.setAdapter(new GridAdapter(Comment.this));
+                            NineGrid.setImagesData(new ArrayList(Arrays.asList(m.getPhoto().split(","))));
+                        }
                     }
                 });
             }
@@ -292,4 +294,10 @@ public class Comment extends Base {
         return true;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

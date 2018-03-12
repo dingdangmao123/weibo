@@ -10,14 +10,12 @@
         android:background="?attr/colorPrimary"
         style="@style/MyToolBar"
         >
-        <TextView
-            android:id="@+id/titleTitle"
-            android:text="微博话题"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <SearchView
+            android:id="@+id/search"
+            android:queryHint="微博话题搜索"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </android.support.v7.widget.Toolbar>
     <!-- TODO: Update blank fragment layout -->
 
@@ -35,5 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 
 </FrameLayout>
