@@ -60,9 +60,10 @@ public class AccountFG extends BaseFG {
     LinearLayout signitem;
     @BindView(R.id.weicoitem)
     LinearLayout weicoitem;
-    Unbinder unbinder;
+
 
     boolean flag=false;
+
 
     @OnClick(R.id.placeitem)
     void place(){
@@ -127,6 +128,7 @@ public class AccountFG extends BaseFG {
         {
             flag=true;
             Refresh();
+
         }
     }
 

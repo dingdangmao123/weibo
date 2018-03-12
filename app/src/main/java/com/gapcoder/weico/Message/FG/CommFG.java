@@ -48,7 +48,6 @@ public class CommFG extends BaseFG {
     SmartRefreshLayout rf;
 
     boolean flag=false;
-
     @Override
     View init(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_comm_fg, container, false);
@@ -103,8 +102,9 @@ public class CommFG extends BaseFG {
             @Override
             public void run() {
 
-                String url = "comm.php?token=" + Token.token + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                String url = "comm.php?token=" + Token.token + "&flag=" + flag + "&id=" + id;
                 final SysMsg m = URLService.get(url, CommModel.class);
+
                 if (!check(m, rf)) {
                     return;
                 }

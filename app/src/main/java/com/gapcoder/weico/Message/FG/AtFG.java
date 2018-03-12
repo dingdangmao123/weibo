@@ -102,9 +102,10 @@ public class AtFG extends BaseFG {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-                String url = "at.php?token=" + Token.token + "&flag=" + String.valueOf(flag) + "&id=" + String.valueOf(id);
+                String url = "at.php?token=" + Token.token + "&flag="+flag+"&id="+id;
                 Log.i("tag", url);
                 final SysMsg m = URLService.get(url, AtModel.class);
+
                 AtModel.InnerBeanX tmp = ((AtModel) m).getInner();
                 LinkedList<AtModel.InnerBeanX.InnerBean> c = tmp.getInner();
                 data.getUser().putAll(tmp.getUser());

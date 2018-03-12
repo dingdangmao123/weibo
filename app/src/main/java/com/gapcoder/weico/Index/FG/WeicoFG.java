@@ -44,7 +44,7 @@ public class WeicoFG extends BaseFG {
     LinkedList<WeicoModel.InnerBean> tmp = new LinkedList<>();
     WeicoAdapter adapter;
     QBadgeView msg;
-
+    QBadgeView bar;
     String type = "new";
     boolean reset = false;
     int current = 1;
@@ -77,6 +77,7 @@ public class WeicoFG extends BaseFG {
             @Override
             public void onClick(View v) {
                 msg.hide(false);
+                bar.hide(false);
                 Intent i = new Intent(getActivity(), Message.class);
                 startActivity(i);
 
@@ -177,7 +178,17 @@ public class WeicoFG extends BaseFG {
                         @Override
                         public void run() {
                             msg = new QBadgeView(getActivity());
-                            msg.bindTarget(target).setBadgeGravity(Gravity.CENTER | Gravity.END);
+                            msg.bindTarget(target).setBadgeGravity(Gravity.END | Gravity.TOP);
+                        }
+                    });
+                }
+                if(bar==null){
+                    UI(new Runnable() {
+                        @Override
+                        public void run() {
+                            bar = new QBadgeView(getActivity());
+                            bar.bindTarget(getActivity().findViewById(R.id.weico)).setBadgeGravity(Gravity.CENTER);
+                            bar.setGravityOffset(15,true);
                         }
                     });
                 }
@@ -185,14 +196,14 @@ public class WeicoFG extends BaseFG {
                     UI(new Runnable() {
                         @Override
                         public void run() {
-                            msg.hide(false);
+                            msg.hide(false);bar.hide(false);
                         }
                     });
                 } else {
                     UI(new Runnable() {
                         @Override
                         public void run() {
-                            msg.setBadgeNumber(num);
+                            msg.setBadgeNumber(-1);bar.setBadgeNumber(-1);
                         }
                     });
                 }
