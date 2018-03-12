@@ -25,7 +25,10 @@ import com.gapcoder.weico.User.User;
 import com.gapcoder.weico.Utils.Image;
 import com.gapcoder.weico.Utils.LinkText;
 import com.gapcoder.weico.Utils.Time;
+import com.jaeger.ninegridimageview.NineGridImageView;
+import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.security.AccessController.getContext;
@@ -47,6 +50,8 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         this.data = data;
         this.mContext = context;
         parse=new LinkText(context);
+        url.add("http://img3.imgtn.bdimg.com/it/u=776553116,300482899&fm=200&gp=0.jpg");
+        url.add("http://img0.imgtn.bdimg.com/it/u=3167476013,1399350923&fm=200&gp=0.jpg");
     }
 
     @Override
@@ -92,6 +97,10 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         if(!m.getFace().equals((String)h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.face));
 
+        h.Grid.setAdapter(mAdapter);
+
+        h.Grid.setImagesData(url);
+
         h.face.setTag(m.getFace());
         Image.down((Activity)mContext,h.face,m.getFace());
     }
@@ -104,6 +113,7 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
     static class SnapViewHolder extends RecyclerView.ViewHolder {
 
 
+        NineGridImageView Grid;
         ImageView face;
         TextView t1;
         TextView t2;
@@ -114,6 +124,7 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         public SnapViewHolder(View itemView) {
             super(itemView);
 
+            Grid=(NineGridImageView)itemView.findViewById(R.id.NineGrid);
             face = (ImageView) itemView.findViewById(R.id.face);
             t1 = (TextView) itemView.findViewById(R.id.name);
             t2 = (TextView) itemView.findViewById(R.id.time);
@@ -124,6 +135,26 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         }
     }
 
+    NineGridImageViewAdapter<String> mAdapter=new NineGridImageViewAdapter<String>() {
+        @Override
+        protected void onDisplayImage(Context context, ImageView iv, String photo) {
+            iv.setTag(photo);
+            Log.i("tag",photo);
+            Image.down((Activity)mContext,iv,photo);
+        }
+
+        @Override
+        protected ImageView generateImageView(Context context) {
+            return super.generateImageView(context);
+        }
+
+     /*   @Override
+        protected void onItemImageClick(Context context, int index, List<String> photoList) {
+            //showBigPicture(context, photoList.get(index));
+        }*/
+    };
+
+    List<String> url=new LinkedList<>();
 
 }
 
