@@ -4,7 +4,7 @@
  服务器采用 php+MySQL+Redis 构建
 
 
-# demo 
+
 
 ## 运行效果
 
