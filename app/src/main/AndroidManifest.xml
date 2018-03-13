@@ -14,17 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Login.Login"
+            android:label="" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label=""
             android:configChanges="orientation|screenSize"
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
         <activity
             android:launchMode="singleInstance"
             android:name=".Index.index"
             android:label="">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
+            </activity>
         <activity
             android:name=".Post"
             android:label=""
@@ -51,7 +57,6 @@
         <activity
             android:name=".Message.Message"
             android:label="" />
-        <activity android:name=".Login.Login" />
         <activity
             android:name=".Change.Change"
             android:label="" />

@@ -26,6 +26,7 @@ import com.gapcoder.weico.Index.FG.WeicoFG;
 import com.gapcoder.weico.MessageService;
 import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Utils.ActivityList;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,6 +58,8 @@ public class index extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         ButterKnife.bind(this);
+        ActivityList.add(this);
+
         tab.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -115,6 +118,7 @@ public class index extends AppCompatActivity {
         Intent service=new Intent(this, MessageService.class);
         startService(service);
         unregisterReceiver(receiver);
+        ActivityList.remove(this);
     }
 
     class MessageReceiver extends BroadcastReceiver{

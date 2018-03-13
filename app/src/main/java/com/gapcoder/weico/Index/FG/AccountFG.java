@@ -21,6 +21,7 @@ import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.General.UserModel;
+import com.gapcoder.weico.Login.Login;
 import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.UserList.UserList;
@@ -97,8 +98,10 @@ public class AccountFG extends BaseFG {
 
     @OnClick(R.id.exititem)
     void exit(){
-
-        Token.token="";
+        Log.i("tag","exit");
+        Token.exit(getActivity());
+        Intent i=new Intent(getActivity(),Login.class);
+        startActivity(i);
         ActivityList.exit();
     }
 

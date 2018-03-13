@@ -22,6 +22,5 @@ public class ActivityList {
         for(Activity ins:list)
             if(!ins.isFinishing())
                 ins.finish();
-
     }
 }

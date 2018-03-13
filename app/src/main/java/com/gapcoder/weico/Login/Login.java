@@ -7,11 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.gapcoder.weico.General.SysMsg;
+import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Index.index;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Token;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +24,6 @@ import butterknife.OnClick;
 public class Login extends AppCompatActivity {
 
     Handler mh=new Handler();
-
     @BindView(R.id.name)
     EditText name;
     @BindView(R.id.psd)
@@ -49,22 +52,24 @@ public class Login extends AppCompatActivity {
         Pool.run(new Runnable() {
             @Override
             public void run() {
-
-                final  LoginModel m =LoginService.login(key,p);
+                HashMap<String, String> map = new HashMap<>();
+                map.put("key", key);
+                map.put("psd", p);
+                final SysMsg r = URLService.post("login.php",map,LoginModel.class);
                 mh.post(new Runnable() {
                     @Override
                     public void run() {
-                        if(m.getOk()==1)
-                        {
-                            Intent i=new Intent(Login.this,index.class);
-                            Token.initToken(Login.this,m.getToken());
-                            Login.this.startActivity(i);
+                        if(!r.getCode().equals("OK")){
+                            T.show(Login.this,r.getMsg());
                         }else{
-                            T.show(Login.this,m.getMsg());
+                            LoginModel.InnerBean token=((LoginModel)r).getInner();
+                            Intent i=new Intent(Login.this,index.class);
+                            Token.initToken(Login.this,token.getToken());
+                            Login.this.startActivity(i);
+                            finish();
                         }
                     }
                 });
-
             }
         });
     }

@@ -1,41 +1,35 @@
 package com.gapcoder.weico.Login;
 
+import com.gapcoder.weico.General.SysMsg;
+
 /**
  * Created by suxiaohui on 2018/3/8.
  */
 
-public class LoginModel {
-    private String token;
-    private int ok;
-    private String msg;
+public class LoginModel extends SysMsg {
 
-    public LoginModel(String token, int ok, String msg) {
-        this.token = token;
-        this.ok = ok;
-        this.msg = msg;
+
+    private InnerBean inner;
+
+    public InnerBean getInner() {
+        return inner;
     }
 
-    public String getToken() {
-        return token;
+    public void setInner(InnerBean inner) {
+        this.inner = inner;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    public static class InnerBean {
 
-    public int getOk() {
-        return ok;
-    }
 
-    public void setOk(int ok) {
-        this.ok = ok;
-    }
+        private String token;
 
-    public String getMsg() {
-        return msg;
-    }
+        public String getToken() {
+            return token;
+        }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+        public void setToken(String token) {
+            this.token = token;
+        }
     }
 }

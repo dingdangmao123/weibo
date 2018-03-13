@@ -30,6 +30,7 @@
 
             <EditText
                 android:id="@+id/name"
+
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
 
@@ -44,6 +45,7 @@
 
             <EditText
                 android:id="@+id/psd"
+                android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="15dp"

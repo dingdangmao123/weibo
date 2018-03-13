@@ -51,7 +51,6 @@ public class Post extends Base {
     Grid adapter;
     final int IMAGE = 0;
 
-    RxPermissions rxPermissions;
     @BindView(R.id.container)
     GridView container;
 
@@ -96,7 +95,6 @@ public class Post extends Base {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("token", Token.token);
                 map.put("text", "" + text.getText().toString());
-                //final SysMsg r = URLService.post("post.php", map, SysMsg.class);
                 final SysMsg r = URLService.upload("upload.php", map, url, SysMsg.class);
                 if (!check(r, null)) {
                     return;
@@ -127,10 +125,8 @@ public class Post extends Base {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 图片选择结果回调
         if (requestCode == IMAGE) {
             if (resultCode == RESULT_OK) {
-
                 List<String> t= data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 if(t.size()==0)
                     return ;
@@ -152,13 +148,9 @@ public class Post extends Base {
                 break;
         }
     }
-
-
     static class Grid extends BaseAdapter {
-
         private List<String> url;
         private Context context;
-
         public Grid(List<String> url, Context context) {
             super();
             this.url = url;
@@ -180,12 +172,9 @@ public class Post extends Base {
 
         @Override
         public View getView(int p, View v, ViewGroup parent) {
-
             if (v == null)
                 v = LayoutInflater.from(context).inflate(R.layout.griditem,null);
             ImageView iv=(ImageView)v.findViewById(R.id.iv);
-            Log.i("tag",""+iv.getMeasuredWidth());
-            //BitmapFactory.decodeFile(url.get(p))
             iv.setImageBitmap(Compress.decodeFile(url.get(p),150,150));
             return v;
         }
