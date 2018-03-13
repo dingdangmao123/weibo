@@ -162,7 +162,7 @@ public class User extends Base {
                         }
                     }
                 });
-                final Bitmap bit = Curl.getImage(user.getFace());
+                final Bitmap bit = Curl.getImage(Config.face+user.getFace());
                 UI(new Runnable() {
                     @Override
                     public void run() {

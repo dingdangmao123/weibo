@@ -52,4 +52,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    compile 'com.yuyh.imgsel:library:2.0.2'
 }

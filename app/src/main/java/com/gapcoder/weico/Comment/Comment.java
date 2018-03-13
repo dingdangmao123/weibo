@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
@@ -217,7 +218,7 @@ public class Comment extends Base {
                     return;
                 }
                 m = ((CommWeicoModel) t).getInner();
-                final Bitmap bit = Curl.getImage(m.getFace());
+                final Bitmap bit = Curl.getImage(Config.face+m.getFace());
                 UI(new Runnable() {
                     @Override
                     public void run() {

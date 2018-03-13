@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Comment.Comment;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Title.Title;
@@ -96,9 +97,8 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         h.t5.setText(String.valueOf(m.getComment()) + "评论");
         h.t6.setText(String.valueOf(m.getLove() + "赞"));
 
-        if (!m.getFace().equals((String) h.face.getTag()))
+        if (h.face.getTag()!=null&&!m.getFace().equals((String) h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.face));
-
 
         h.Grid.setAdapter(mAdapter);
         h.Grid.setImagesData(new ArrayList(Arrays.asList(m.getPhoto().split(","))));
@@ -109,8 +109,8 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
             h.Grid.setVisibility(View.VISIBLE);
         }
 
-        h.face.setTag(m.getFace());
-        Image.down((Activity) mContext, h.face, m.getFace());
+        h.face.setTag(Config.url+"face/"+m.getFace());
+        Image.down((Activity) mContext, h.face, Config.face +m.getFace());
     }
 
     @Override

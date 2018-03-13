@@ -39,13 +39,13 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/face"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
                     <TextView
                         android:id="@+id/name"
                         android:layout_marginLeft="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
                 </LinearLayout>
 
                 <LinearLayout

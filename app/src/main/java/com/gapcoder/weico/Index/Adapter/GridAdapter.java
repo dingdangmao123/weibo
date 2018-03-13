@@ -23,9 +23,9 @@ public class GridAdapter extends NineGridImageViewAdapter<String> {
 
     @Override
     protected void onDisplayImage(Context context, ImageView iv, String photo) {
-        iv.setTag(photo);
-        Log.i("tag", Config.url+"photo/"+photo);
-        Image.down((Activity) context, iv, Config.url+"photo/"+photo);
+        iv.setTag(Config.photo+photo);
+        Log.i("tag", Config.photo+photo);
+        Image.down((Activity) context, iv, Config.photo+photo);
     }
 
     @Override

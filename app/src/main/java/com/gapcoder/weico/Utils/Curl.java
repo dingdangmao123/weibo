@@ -28,16 +28,13 @@ public class Curl {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent",
-                    "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/49.0");
+                    "android curl");
             InputStream in = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String str;
             while ((str = br.readLine()) != null) {
-                // Log.i("url",str);
                 sb.append(str);
             }
-            //Log.i("utl",sb.toString());
-
         } catch (Exception e) {
             Log.i("error",e.toString());
         }finally {
@@ -57,7 +54,7 @@ public class Curl {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent",
-                    "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/49.0");
+                    "android curl");
             InputStream in = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String str;
@@ -84,7 +81,7 @@ public class Curl {
             // 使用HttpURLConnection打开连接
             urlConn= (HttpURLConnection)imgUrl
                     .openConnection();
-            urlConn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0");
+            urlConn.setRequestProperty("User-Agent", "android curl");
             urlConn.setDoInput(true);
             urlConn.connect();
 

@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  */
 
 public class Pool {
-    private static ExecutorService pool= Executors.newFixedThreadPool(1);
+    private static ExecutorService pool= Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public static  void run(Runnable r){
         try {

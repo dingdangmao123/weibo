@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Account.Account;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Title.Title;
@@ -66,7 +67,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.SnapVi
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.face));
 
         h.face.setTag(m.getFace());
-        Image.down((Activity)mContext,h.face,m.getFace());
+        Image.down((Activity)mContext,h.face, Config.face+m.getFace());
 
     }
 
