@@ -1,5 +1,7 @@
 # weico
-a simple weibo app
+ 这是一个简单的Android微博客户端，采用ButterKnife，OKHttp框架
+ 
+ 服务器采用 php+MySQL+Redis 构建
 
 
 # demo 
