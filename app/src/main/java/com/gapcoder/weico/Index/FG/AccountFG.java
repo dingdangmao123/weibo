@@ -24,6 +24,7 @@ import com.gapcoder.weico.General.UserModel;
 import com.gapcoder.weico.Post;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.UserList.UserList;
+import com.gapcoder.weico.Utils.ActivityList;
 import com.gapcoder.weico.Utils.Curl;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
@@ -94,6 +95,12 @@ public class AccountFG extends BaseFG {
             startActivityForResult(i,PLACE);
     }
 
+    @OnClick(R.id.exititem)
+    void exit(){
+
+        Token.token="";
+        ActivityList.exit();
+    }
 
     @OnClick(R.id.signitem)
     void sign(){

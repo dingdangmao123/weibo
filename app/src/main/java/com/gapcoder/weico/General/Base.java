@@ -1,5 +1,6 @@
 package com.gapcoder.weico.General;
 
+import android.app.ActivityManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 
 import com.gapcoder.weico.Config;
 import com.gapcoder.weico.R;
+import com.gapcoder.weico.Utils.ActivityList;
 import com.gapcoder.weico.Utils.T;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -24,6 +26,7 @@ public class Base extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityList.add(this);
         setContentView();
         ButterKnife.bind(this);
         Toolbar t=(Toolbar)findViewById(R.id.toolbar);
@@ -100,4 +103,9 @@ public class Base extends AppCompatActivity {
                     }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityList.remove(this);
+    }
 }

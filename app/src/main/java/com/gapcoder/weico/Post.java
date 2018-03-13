@@ -1,26 +1,43 @@
 package com.gapcoder.weico;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
+import com.gapcoder.weico.Utils.Compress;
+import com.gapcoder.weico.Utils.Image;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Token;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -30,10 +47,13 @@ public class Post extends Base {
     @BindView(R.id.text)
     EditText text;
 
-    List<String> url;
+    List<String> url=new ArrayList<>();
+    Grid adapter;
     final int IMAGE = 0;
 
     RxPermissions rxPermissions;
+    @BindView(R.id.container)
+    GridView container;
 
     @OnClick(R.id.select)
     void selectCheck() {
@@ -58,6 +78,15 @@ public class Post extends Base {
     @Override
     public void init() {
 
+        adapter=new Grid(url,this);
+        container.setAdapter(adapter);
+        container.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                url.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     void post() {
@@ -101,11 +130,13 @@ public class Post extends Base {
         // 图片选择结果回调
         if (requestCode == IMAGE) {
             if (resultCode == RESULT_OK) {
-                // Get the result list of select image paths
-                url = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                // do your logic ....
-                for (int i = 0; i < url.size(); i++)
-                    T.show(Post.this, url.get(i));
+
+                List<String> t= data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                if(t.size()==0)
+                    return ;
+                url.clear();
+                url.addAll(t);
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -120,5 +151,44 @@ public class Post extends Base {
                     T.show(Post.this, "你没有允许权限");
                 break;
         }
+    }
+
+
+    static class Grid extends BaseAdapter {
+
+        private List<String> url;
+        private Context context;
+
+        public Grid(List<String> url, Context context) {
+            super();
+            this.url = url;
+            this.context = context;
+        }
+        @Override
+        public int getCount() {
+            return url.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return url.get(position);
+        }
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int p, View v, ViewGroup parent) {
+
+            if (v == null)
+                v = LayoutInflater.from(context).inflate(R.layout.griditem,null);
+            ImageView iv=(ImageView)v.findViewById(R.id.iv);
+            Log.i("tag",""+iv.getMeasuredWidth());
+            //BitmapFactory.decodeFile(url.get(p))
+            iv.setImageBitmap(Compress.decodeFile(url.get(p),150,150));
+            return v;
+        }
+
     }
 }

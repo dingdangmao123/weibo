@@ -60,10 +60,8 @@ public class index extends AppCompatActivity {
         tab.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 if(item.getItemId()==R.id.weico)
                     bar.hide(false);
-
                 FragmentTransaction tran = fm.beginTransaction();
                 hideFragments(tran);
                 int id = item.getItemId();
@@ -92,15 +90,12 @@ public class index extends AppCompatActivity {
         flag.add(R.id.weico);
         tran.commit();
 
-
         receiver=new MessageReceiver();
         filter=new IntentFilter();
         filter.addAction("com.gapcoder.weico.MESSAGE");
         registerReceiver(receiver,filter);
-
-        Intent service=new Intent(this, MessageService.class);
-        startService(service);
-
+      /*  Intent service=new Intent(this, MessageService.class);
+        startService(service);*/
     }
 
     private void hideFragments(FragmentTransaction transaction) {

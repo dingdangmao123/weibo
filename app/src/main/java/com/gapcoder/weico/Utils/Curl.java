@@ -99,4 +99,31 @@ public class Curl {
         return bitmap;
 
     }
+
+    public static Bitmap getImage(String link,int w,int h){
+        HttpURLConnection urlConn=null;
+        Bitmap bitmap=null;
+        try {
+            URL imgUrl = new URL(link);
+            // 使用HttpURLConnection打开连接
+            urlConn= (HttpURLConnection)imgUrl
+                    .openConnection();
+            urlConn.setRequestProperty("User-Agent", "android curl");
+            urlConn.setDoInput(true);
+            urlConn.connect();
+
+            InputStream is = urlConn.getInputStream();
+            // 将InputStream转换成Bitmap
+            bitmap =Compress.getBitmap(is,w,h);
+            is.close();
+        } catch (Exception e) {
+            Log.i("fetchPic", e.toString());
+
+        }finally {
+            if(urlConn!=null)
+                urlConn.disconnect();
+        }
+        return bitmap;
+
+    }
 }

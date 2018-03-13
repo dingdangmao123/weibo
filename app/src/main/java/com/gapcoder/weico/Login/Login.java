@@ -31,9 +31,13 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Token.initToken(this);
+        if(!Token.token.equals("")){
+            Intent i=new Intent(Login.this,index.class);
+            Login.this.startActivity(i);
+        }
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
     }
 
     @OnClick(R.id.login)
@@ -53,7 +57,7 @@ public class Login extends AppCompatActivity {
                         if(m.getOk()==1)
                         {
                             Intent i=new Intent(Login.this,index.class);
-                            Token.token=m.getToken();
+                            Token.initToken(Login.this,m.getToken());
                             Login.this.startActivity(i);
                         }else{
                             T.show(Login.this,m.getMsg());

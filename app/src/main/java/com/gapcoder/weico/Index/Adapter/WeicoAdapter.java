@@ -25,6 +25,7 @@ import com.gapcoder.weico.Title.Title;
 import com.gapcoder.weico.User.User;
 import com.gapcoder.weico.Utils.Image;
 import com.gapcoder.weico.Utils.LinkText;
+import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Time;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
@@ -110,6 +111,7 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         }
 
         h.face.setTag(Config.url+"face/"+m.getFace());
+       // T.show(mContext,""+h.face.getWidth());
         Image.down((Activity) mContext, h.face, Config.face +m.getFace());
     }
 

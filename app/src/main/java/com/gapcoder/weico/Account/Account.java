@@ -80,7 +80,7 @@ public class Account extends Base {
         });
 
         getUser();
-        Refresh(1);
+        rf.autoRefresh();
 
     }
 

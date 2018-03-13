@@ -36,6 +36,7 @@ public class Image{
         return getInstance().get(k);
     }
     public synchronized static void put(String k,Bitmap v){ getInstance().put(k,v);}
+
     public static void down(Activity context, ImageView v, String url){
         Bitmap bit=get(url);
         if(bit!=null){
@@ -49,6 +50,20 @@ public class Image{
             getFromUrl(context,v,url);
         }
     }
+
+    public static void down(Activity context, ImageView v, String url,int w,int h){
+        Bitmap bit=get(url);
+        if(bit!=null){
+            Log.i("Unit","getFromCache "+url);
+            try {
+                v.setImageBitmap(bit);
+            }catch(Exception e){
+                Log.i("Unit",e.toString());
+            }
+        }else{
+            getFromUrl(context,v,url,w,h);
+        }
+    }
     public static void getFromUrl(final Activity context, final ImageView im, final String url){
         Log.i("Unit","getFromUrl "+url);
         pool.execute(new Runnable() {
@@ -59,7 +74,7 @@ public class Image{
                     Log.i("Unit","null bitmap");
                 }else if(bit!=null) {
                     put(url, bit);
-                  context.runOnUiThread(new Runnable() {
+                    context.runOnUiThread(new Runnable() {
                       @Override
                       public void run() {
                           if (url.equals(im.getTag().toString())) {
@@ -76,5 +91,33 @@ public class Image{
         });
 
     }
+    public static void getFromUrl(final Activity context, final ImageView im, final String url,final  int w,final int h){
+        Log.i("Unit","getFromUrl "+url);
+        pool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Bitmap bit=Curl.getImage(url,w,h);
+                if(bit==null){
+                    Log.i("Unit","null bitmap");
+                }else if(bit!=null) {
+                    put(url, bit);
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (url.equals(im.getTag().toString())) {
+                                try {
+                                    im.setImageBitmap(bit);
+                                } catch (Exception e) {
+                                    Log.i("Unit", e.toString());
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
 }
 

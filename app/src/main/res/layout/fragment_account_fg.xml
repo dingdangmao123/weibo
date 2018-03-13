@@ -189,6 +189,32 @@
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
                     android:background="@color/gray"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:padding="15dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#fff"
+                    android:id="@+id/exititem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:text="退出账号"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:background="@mipmap/ic_keyboard_arrow_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+
+                </LinearLayout>
+                <View android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/gray"/>
+
             </LinearLayout>
     </ScrollView>
 
