@@ -1,11 +1,14 @@
 # Weico
  
- 这是一个简单的Android微博客户端，采用ButterKnife，OKHttp框架
+- 这是一个简单的Android微博客户端，采用ButterKnife，OKHttp框架
  
- 服务器采用 PHP+MySQL+Redis 构建
+- 服务器采用 PHP+MySQL+Redis 构建
 
 
-## 笔记
+
+
+## 开发笔记
+
 - 个人觉得最重要的是设计好Json数据协议，利用PHP输出Json数据，采用Okhttp和Gson得到Java数据模型，Gson泛型的问题，将实体消息封装到inner字段内，通过类继承绕开泛型，code字段和msg字段交给BaseActivity，BaseFragment检查处理。
 
 -  Token字段登录后存入MySQL，并缓存到Redis,登录后自动刷新，旧的自动废弃。
