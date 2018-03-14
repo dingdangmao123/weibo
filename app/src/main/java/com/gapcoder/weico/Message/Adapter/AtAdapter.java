@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Comment.Comment;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Message.Model.AtModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.Image;
@@ -61,7 +62,7 @@ public class AtAdapter  extends RecyclerView.Adapter<AtAdapter.SnapViewHolder>{
     public void onBindViewHolder(AtAdapter.SnapViewHolder h, int position) {
         AtModel.InnerBeanX.InnerBean m=inner.get(position);
         int id=m.getHid();
-        String face=user.get(m.getHid()).getFace();
+        String face=Config.face+user.get(m.getHid()).getFace();
         h.t1.setText(user.get(id).getName());
         h.t2.setText("@了你·"+ Time.format(m.getTime()));
 

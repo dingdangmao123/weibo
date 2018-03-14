@@ -79,7 +79,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
     @Override
     public void onBindViewHolder(CommentAdapter.SnapViewHolder h, int position) {
         Comm.InnerBean.CommentBean m = comment.get(position);
-        String face=user.get(m.getUid()).getFace();
+        String face=Config.face+user.get(m.getUid()).getFace();
         Log.i("adapter",m.getText());
         Log.i("adapter",user.get(m.getUid()).getName());
         h.name.setText(user.get(m.getUid()).getName());
@@ -94,8 +94,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
         if(!face.equals((String)h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.face));
 
+
         h.face.setTag(face);
-        Image.down((Activity)mContext,h.face, Config.face+face);
+        Image.down((Activity)mContext,h.face,face);
     }
 
     @Override

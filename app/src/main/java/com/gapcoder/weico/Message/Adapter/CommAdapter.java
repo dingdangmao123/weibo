@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gapcoder.weico.Comment.Comment;
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Message.Model.AtModel;
 import com.gapcoder.weico.Message.Model.CommModel;
 import com.gapcoder.weico.R;
@@ -59,12 +60,12 @@ public class CommAdapter  extends   RecyclerView.Adapter<CommAdapter.SnapViewHol
         h.name.setText(m.getName());
         h.time.setText(Time.format(m.getTime()));
         h.text.setText(m.getText());
-
-        if(!m.getFace().equals((String)h.face.getTag()))
+        String face=Config.face+m.getFace();
+        if(!face.equals((String)h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.face));
 
-        h.face.setTag(m.getFace());
-        Image.down((Activity)context,h.face,m.getFace());
+        h.face.setTag(face);
+        Image.down((Activity)context,h.face, face);
     }
 
     @Override

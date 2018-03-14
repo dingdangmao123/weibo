@@ -97,8 +97,8 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
         h.t4.setText(parse.parse(m.getText()));
         h.t5.setText(String.valueOf(m.getComment()) + "评论");
         h.t6.setText(String.valueOf(m.getLove() + "赞"));
-
-        if (h.face.getTag()!=null&&!m.getFace().equals((String) h.face.getTag()))
+        String face=Config.face+m.getFace();
+        if (h.face.getTag()!=null&&!face.equals((String) h.face.getTag()))
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.face));
 
         h.Grid.setAdapter(mAdapter);
@@ -110,8 +110,8 @@ public class WeicoAdapter extends RecyclerView.Adapter<WeicoAdapter.SnapViewHold
             h.Grid.setVisibility(View.VISIBLE);
         }
 
-        h.face.setTag(Config.face+m.getFace());
-        Image.down((Activity) mContext, h.face, Config.face +m.getFace());
+        h.face.setTag(face);
+        Image.down((Activity) mContext, h.face,face);
     }
 
     @Override
