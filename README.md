@@ -1,4 +1,4 @@
-# Weico
+# Weibo
  
 - 这是一个简单的Android微博客户端，采用ButterKnife，OKHttp框架
  
