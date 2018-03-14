@@ -58,6 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </GridView>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ImageView
             android:clickable="true"
             android:layout_margin="10dp"
@@ -67,5 +71,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
              />
+        <TextView
+            android:id="@+id/count"
+            android:text="200"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_margin="10dp"
+            android:textColor="@color/highlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

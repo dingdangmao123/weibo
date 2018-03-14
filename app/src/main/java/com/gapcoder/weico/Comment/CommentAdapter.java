@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gapcoder.weico.Config;
 import com.gapcoder.weico.Index.Model.TitleModel;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Title.Title;
@@ -82,7 +84,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
         Log.i("adapter",user.get(m.getUid()).getName());
         h.name.setText(user.get(m.getUid()).getName());
         h.time.setText(Time.format(m.getTime()));
-
+        h.text.setMovementMethod(LinkMovementMethod.getInstance());
         if(m.getOid()>0){
             h.text.setText(reply.parse(m.getText(),m.getOid(),user.get(m.getOid()).getName()));
         }else{
@@ -93,7 +95,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.SnapView
             h.face.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.face));
 
         h.face.setTag(face);
-       Image.down((Activity)mContext,h.face,face);
+        Image.down((Activity)mContext,h.face, Config.face+face);
     }
 
     @Override

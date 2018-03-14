@@ -57,7 +57,6 @@ public class Base extends AppCompatActivity {
                 break;
             default:
                 onItemSelected(item.getItemId());
-
         }
         return true;
     }

@@ -8,9 +8,11 @@ import com.gapcoder.weico.Index.Model.WeicoModel;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -19,12 +21,12 @@ import java.net.URL;
  */
 
 public class Curl {
-    public static String getText(String link){
+    public static String getText(String link) {
 
         StringBuilder sb = new StringBuilder();
-        HttpURLConnection con=null;
+        HttpURLConnection con = null;
         try {
-            URL url=new URL(link);
+            URL url = new URL(link);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent",
@@ -36,21 +38,21 @@ public class Curl {
                 sb.append(str);
             }
         } catch (Exception e) {
-            Log.i("error",e.toString());
-        }finally {
-            if(con!=null)
+            Log.i("error", e.toString());
+        } finally {
+            if (con != null)
                 con.disconnect();
         }
         return sb.toString();
 
     }
 
-    public static Object getText(String link,Class<?> clz){
+    public static Object getText(String link, Class<?> clz) {
 
         StringBuilder sb = new StringBuilder();
-        HttpURLConnection con=null;
+        HttpURLConnection con = null;
         try {
-            URL url=new URL(link);
+            URL url = new URL(link);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent",
@@ -62,9 +64,9 @@ public class Curl {
                 sb.append(str);
             }
         } catch (Exception e) {
-            Log.i("error",e.toString());
-        }finally {
-            if(con!=null)
+            Log.i("error", e.toString());
+        } finally {
+            if (con != null)
                 con.disconnect();
         }
         Gson gson = new Gson();
@@ -73,57 +75,56 @@ public class Curl {
 
     }
 
-    public static Bitmap getImage(String link){
-        HttpURLConnection urlConn=null;
-        Bitmap bitmap=null;
+    public static Bitmap getImage(String link) {
+        HttpURLConnection urlConn = null;
+        Bitmap bitmap = null;
         try {
             URL imgUrl = new URL(link);
-            // 使用HttpURLConnection打开连接
-            urlConn= (HttpURLConnection)imgUrl
+            urlConn = (HttpURLConnection) imgUrl
                     .openConnection();
             urlConn.setRequestProperty("User-Agent", "android curl");
             urlConn.setDoInput(true);
             urlConn.connect();
-
             InputStream is = urlConn.getInputStream();
-            // 将InputStream转换成Bitmap
             bitmap = BitmapFactory.decodeStream(new BufferedInputStream(is));
             is.close();
         } catch (Exception e) {
             Log.i("fetchPic", e.toString());
-
-        }finally {
-            if(urlConn!=null)
+        } finally {
+            if (urlConn != null)
                 urlConn.disconnect();
         }
         return bitmap;
-
     }
 
-    public static Bitmap getImage(String link,int w,int h){
-        HttpURLConnection urlConn=null;
-        Bitmap bitmap=null;
+    public static boolean getImage(String link, OutputStream out) {
+        HttpURLConnection urlConn = null;
+        BufferedInputStream bis = null;
+        BufferedOutputStream bout = null;
         try {
             URL imgUrl = new URL(link);
-            // 使用HttpURLConnection打开连接
-            urlConn= (HttpURLConnection)imgUrl
+            urlConn = (HttpURLConnection) imgUrl
                     .openConnection();
             urlConn.setRequestProperty("User-Agent", "android curl");
             urlConn.setDoInput(true);
             urlConn.connect();
-
             InputStream is = urlConn.getInputStream();
-            // 将InputStream转换成Bitmap
-            bitmap =Compress.getBitmap(is,w,h);
-            is.close();
+            bis = new BufferedInputStream(is);
+            bout = new BufferedOutputStream(out);
+            int b = 0;
+            while ((b = bis.read()) != -1)
+                bout.write(b);
+
+            bis.close();
+            bout.close();
+            return true;
+
         } catch (Exception e) {
             Log.i("fetchPic", e.toString());
-
-        }finally {
-            if(urlConn!=null)
+            return false;
+        } finally {
+            if (urlConn != null)
                 urlConn.disconnect();
         }
-        return bitmap;
-
     }
 }

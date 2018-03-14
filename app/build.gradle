@@ -53,5 +53,5 @@ dependencies {
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     compile 'com.yuyh.imgsel:library:2.0.2'
-    compile 'com.jakewharton:disklrucache:2.0.2'
+    compile 'com.jakewharton:disklrucache:1.2.0'
 }

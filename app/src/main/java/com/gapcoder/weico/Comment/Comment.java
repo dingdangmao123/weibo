@@ -123,6 +123,12 @@ public class Comment extends Base {
     @OnClick(R.id.send)
     void send() {
 
+        final String s=edit.getText().toString();
+        if(s.length()>200){
+            T.show(this,"评论字数超过限制!");
+            return ;
+        }
+
         Pool.run(new Runnable() {
             @Override
             public void run() {
@@ -133,7 +139,7 @@ public class Comment extends Base {
                 map.put("hid", "" + m.getUid());
                 map.put("cid", "" + cid);
                 map.put("cuid", "" + cuid);
-                map.put("text", edit.getText().toString());
+                map.put("text", s);
 
                 final SysMsg r = URLService.post("reply.php", map, SysMsg.class);
                 if (!check(r, rf)) {
@@ -146,7 +152,7 @@ public class Comment extends Base {
                 UI(new Runnable() {
                     @Override
                     public void run() {
-                        edit.setHint("输入评论");
+                        edit.setHint("输入评论(200以内)");
                         edit.setText("");
                         hintKeyboard();
                         T.show(Comment.this, r.getMsg());

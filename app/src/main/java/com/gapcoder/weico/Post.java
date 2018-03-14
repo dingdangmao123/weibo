@@ -1,16 +1,13 @@
 package com.gapcoder.weico;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -20,25 +17,24 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.General.SysMsg;
 import com.gapcoder.weico.General.URLService;
 import com.gapcoder.weico.Utils.Compress;
-import com.gapcoder.weico.Utils.Image;
 import com.gapcoder.weico.Utils.Pool;
 import com.gapcoder.weico.Utils.T;
 import com.gapcoder.weico.Utils.Token;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -47,12 +43,14 @@ public class Post extends Base {
     @BindView(R.id.text)
     EditText text;
 
-    List<String> url=new ArrayList<>();
+    List<String> url = new ArrayList<>();
     Grid adapter;
     final int IMAGE = 0;
 
     @BindView(R.id.container)
     GridView container;
+    @BindView(R.id.count)
+    TextView count;
 
     @OnClick(R.id.select)
     void selectCheck() {
@@ -62,6 +60,13 @@ public class Post extends Base {
             select();
         }
     }
+
+    @OnTextChanged(R.id.text)
+    void input(CharSequence s, int start, int before, int c) {
+        int n = 200 - s.length();
+        count.setText("" + n);
+    }
+
 
     void select() {
         MultiImageSelector.create()
@@ -77,7 +82,7 @@ public class Post extends Base {
     @Override
     public void init() {
 
-        adapter=new Grid(url,this);
+        adapter = new Grid(url, this);
         container.setAdapter(adapter);
         container.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,12 +94,22 @@ public class Post extends Base {
     }
 
     void post() {
+
+        if (url.size() > 9) {
+            T.show(Post.this, "你已经超过九张图片!");
+            return;
+        }
+        final String s = text.getText().toString();
+        if (s.length() > 200) {
+            T.show(Post.this, "超过长度限制");
+            return;
+        }
         Pool.run(new Runnable() {
             @Override
             public void run() {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("token", Token.token);
-                map.put("text", "" + text.getText().toString());
+                map.put("text", s);
                 final SysMsg r = URLService.upload("upload.php", map, url, SysMsg.class);
                 if (!check(r, null)) {
                     return;
@@ -104,6 +119,8 @@ public class Post extends Base {
                     public void run() {
                         T.show(Post.this, r.getMsg());
                         text.setText("");
+                        url.clear();
+                        adapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -127,9 +144,9 @@ public class Post extends Base {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE) {
             if (resultCode == RESULT_OK) {
-                List<String> t= data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                if(t.size()==0)
-                    return ;
+                List<String> t = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                if (t.size() == 0)
+                    return;
                 url.clear();
                 url.addAll(t);
                 adapter.notifyDataSetChanged();
@@ -148,14 +165,17 @@ public class Post extends Base {
                 break;
         }
     }
+
     static class Grid extends BaseAdapter {
         private List<String> url;
         private Context context;
+
         public Grid(List<String> url, Context context) {
             super();
             this.url = url;
             this.context = context;
         }
+
         @Override
         public int getCount() {
             return url.size();
@@ -165,6 +185,7 @@ public class Post extends Base {
         public Object getItem(int position) {
             return url.get(position);
         }
+
         @Override
         public long getItemId(int position) {
             return position;
@@ -173,9 +194,9 @@ public class Post extends Base {
         @Override
         public View getView(int p, View v, ViewGroup parent) {
             if (v == null)
-                v = LayoutInflater.from(context).inflate(R.layout.griditem,null);
-            ImageView iv=(ImageView)v.findViewById(R.id.iv);
-            iv.setImageBitmap(Compress.decodeFile(url.get(p),150,150));
+                v = LayoutInflater.from(context).inflate(R.layout.griditem, null);
+            ImageView iv = (ImageView) v.findViewById(R.id.iv);
+            iv.setImageBitmap(Compress.decodeFile(url.get(p), 150, 150));
             return v;
         }
 

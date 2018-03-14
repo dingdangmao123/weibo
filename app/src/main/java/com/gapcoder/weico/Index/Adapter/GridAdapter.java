@@ -26,7 +26,7 @@ public class GridAdapter extends NineGridImageViewAdapter<String> {
 
         iv.setTag(Config.photo+photo);
         Log.i("tag", Config.photo+photo);
-        Image.down((Activity) context, iv, Config.photo+photo);
+        Image.down((Activity) context, iv, Config.photo+photo,150,150);
 
     }
 
