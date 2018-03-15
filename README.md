@@ -6,6 +6,8 @@
 
 - [中文文档](https://github.com/dingdangmao123/weibo/blob/master/README_ZH.md)
 
+
+
 ## Notes
 
 - Personally thinking that the most important thing is to design a good Json data protocol, use PHP to output Json data, use Okhttp and Gson to get the Java data model, Gson generic problem, encapsulate entity messages in the inner field, bypass generics by class inheritance, The code field and msg field are passed to BaseActivity and BaseFragment checks and process.
@@ -19,13 +21,17 @@
 
 
 
-## plan
+## Plan
 
 - add feature,fix bugs and refactor the code.
 
 - I plan to add the realtime message notifications (Java NIO)
 
-## demo
+
+
+## Demo
 
 ![](https://github.com/dingdangmao123/weico/blob/master/demo/11.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/12.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/13.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/1.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/2.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/3.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/4.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/5.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/6.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/7.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/8.png) ![](https://github.com/dingdangmao123/weico/blob/master/demo/9.png)
+
+
 
