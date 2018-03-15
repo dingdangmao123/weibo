@@ -1,6 +1,6 @@
 # Weibo
  
-- This is a simple app like **twitter**，which uses **ButterKnife**,**OKHttp** and so on.
+- This is a simple app like **Twitter**，which uses **ButterKnife**,**OKHttp** and so on.
 
 - The server use **PHP**, **MySQL** and **Redis**.
 
