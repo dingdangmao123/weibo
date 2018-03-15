@@ -1,8 +1,8 @@
 # Weibo
  
-- This is a simple app like twitter，which uses ButterKnife,OKHttp and so on.
+- This is a simple app like **twitter**，which uses **ButterKnife**,**OKHttp** and so on.
 
-- The server use PHP,MYSQL and Redis.
+- The server use **PHP**, **MySQL** and **Redis**.
 
 - [中文文档](https://github.com/dingdangmao123/weibo/blob/master/README_ZH.md)
 
@@ -16,7 +16,7 @@
 
 - The rest are mainly some regular optimizations, the labeling of pictures prevents misplacement, thumbnails, LRU cache, etc.
 
-- The more interesting of twitter is the **@function**, **#topic#** function, through regular expression matching to extract information, generate notifications and insert into MySQL to improve performance, **#topic#** has a starting and ending #, better match, and **@Function** Because it is more difficult to do without the abort symbol, this project supports two types: **@Java@Scala@Kotlin** or **@Java @Scala @Kotlin** is defined by the back @ symbol or space, I wonder if there is a better design. The UI displays and responds to click events with Android SpannableString.
+- The more interesting of **twitter** is the **@function**, **#topic#** function, through regular expression matching to extract information, generate notifications and insert into MySQL to improve performance, **#topic#** has a starting and ending #, better match, and **@Function** Because it is more difficult to do without the abort symbol, this project supports two types: **@Java@Scala@Kotlin** or **@Java @Scala @Kotlin** is defined by the back @ symbol or space, I wonder if there is a better design. The UI displays and responds to click events with Android SpannableString.
 
 
 
