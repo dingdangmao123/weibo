@@ -8,13 +8,13 @@
 
 ## Notes
 
-- Personally thinking that the most important thing is to design a good Json data protocol, use PHP to output Json data, use Okhttp and Gson to get the Java data model, Gson generic problem, encapsulate entity messages in the inner field, bypass generics by class inheritance, The code field and msg field are passed to BaseActivity and BaseFragment checks the processing.
+- Personally thinking that the most important thing is to design a good Json data protocol, use PHP to output Json data, use Okhttp and Gson to get the Java data model, Gson generic problem, encapsulate entity messages in the inner field, bypass generics by class inheritance, The code field and msg field are passed to BaseActivity and BaseFragment checks and process.
 
-- After the Token field is logged in, it is stored in MySQL, cached in Redis, automatically refreshed after login, and the old one automatically discarded.
+- With the Token field gotten, it will be stored in MySQL, cached in Redis, automatically refreshed. Of course, the old one is automatically discarded.
 
 - The rest are mainly some regular optimizations, the labeling of pictures prevents misplacement, thumbnails, LRU cache, etc.
 
-- The more interesting of twitter is the @function, #topic# function, through regular expression matching to extract information, generate reminders and other bulk insert MySQL, improve performance, # # function has a starting and ending #, better match, and @Function Because it is more difficult to do without the abort symbol, this project supports two types: @Java@Scala@Kotlin or @Java @Scala @Kotlin is defined by the back @ symbol or space, I wonder if there is a better design. The UI displays and responds to click events with Android SpannableString.
+- The more interesting of twitter is the **@function**, **#topic#** function, through regular expression matching to extract information, generate notifications and insert into MySQL to improve performance, **#topic#** has a starting and ending #, better match, and **@Function** Because it is more difficult to do without the abort symbol, this project supports two types: **@Java@Scala@Kotlin** or **@Java @Scala @Kotlin** is defined by the back @ symbol or space, I wonder if there is a better design. The UI displays and responds to click events with Android SpannableString.
 
 
 
@@ -23,8 +23,7 @@
 
 - add feature,fix bugs and refactor the code.
 
-- add the realtime message notifications (Java NIO)
-- 
+- I plan to add the realtime message notifications (Java NIO)
 
 ## demo
 
