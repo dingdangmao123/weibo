@@ -27,12 +27,15 @@
 - 考虑引入消息队列来达到实时提醒(Java Netty框架)，需要客户端保持和NIO服务器的TCP链接，进程保活是个问题。框架
 
 
+
 ## 主要框架
 - [ButterKnife](https://github.com/JakeWharton/butterknife)
 - [Okhttp](https://github.com/square/okhttp)
 - [Gson](https://github.com/google/gson)
 - [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)
 - [ImageSelector](https://github.com/smuyyh/ImageSelector)
+
+
 
 
 
