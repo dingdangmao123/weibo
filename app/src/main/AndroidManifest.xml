@@ -15,22 +15,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Login.Login"
-            android:label="" >
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:label=""
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+            android:label="" />
         <activity
-            android:launchMode="singleTask"
             android:name=".Index.index"
-            android:label="">
-
-            </activity>
+            android:label=""
+            android:launchMode="singleTask"></activity>
         <activity
             android:name=".Post"
             android:label=""
@@ -62,7 +61,7 @@
             android:label="" />
 
         <service
-            android:name=".MessageService"
+            android:name=".MessageService.MessageService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

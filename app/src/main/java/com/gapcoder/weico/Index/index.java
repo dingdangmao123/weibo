@@ -10,29 +10,21 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.gapcoder.weico.General.Base;
 import com.gapcoder.weico.Index.FG.AccountFG;
 import com.gapcoder.weico.Index.FG.TitleFG;
 import com.gapcoder.weico.Index.FG.WeicoFG;
-import com.gapcoder.weico.MessageService;
-import com.gapcoder.weico.Post;
+import com.gapcoder.weico.MessageService.MessageService;
 import com.gapcoder.weico.R;
 import com.gapcoder.weico.Utils.ActivityList;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,8 +89,8 @@ public class index extends AppCompatActivity {
         filter=new IntentFilter();
         filter.addAction("com.gapcoder.weico.MESSAGE");
         registerReceiver(receiver,filter);
-      /*  Intent service=new Intent(this, MessageService.class);
-        startService(service);*/
+        Intent service=new Intent(this, MessageService.class);
+        startService(service);
     }
 
     private void hideFragments(FragmentTransaction transaction) {
@@ -116,7 +108,7 @@ public class index extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Intent service=new Intent(this, MessageService.class);
-        startService(service);
+        stopService(service);
         unregisterReceiver(receiver);
         ActivityList.remove(this);
     }
