@@ -4,7 +4,7 @@
  
 - 服务器采用 PHP+MySQL+Redis 构建
 
-
+- [English](https://github.com/dingdangmao123/weibo/blob/master/README_EN.md)
 
 
 ## 开发笔记
