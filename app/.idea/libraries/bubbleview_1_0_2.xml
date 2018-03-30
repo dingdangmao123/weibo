@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="bubbleview-1.0.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/4407764dd60ac809bda7e1ef93b0bb26f9a5a05e/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4407764dd60ac809bda7e1ef93b0bb26f9a5a05e/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.cpiz.bubbleview/bubbleview/1.0.2/5a1ca11da650c83feca6cdc1b56b6d34a8ed3556/bubbleview-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
