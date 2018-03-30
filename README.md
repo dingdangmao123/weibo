@@ -30,7 +30,7 @@
 - [Gson](https://github.com/google/gson)
 - [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)
 - [ImageSelector](https://github.com/smuyyh/ImageSelector)
-
+- [Netty](https://github.com/netty/netty)
 
 
 
