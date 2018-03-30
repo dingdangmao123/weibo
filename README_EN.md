@@ -4,7 +4,7 @@
 
 - The server use **PHP**, **MySQL** and **Redis**.
 
-- [中文文档](https://github.com/dingdangmao123/weibo/blob/master/README_ZH.md)
+- [中文文档](https://github.com/dingdangmao123/weibo/blob/master/README.md)
 
 
 
