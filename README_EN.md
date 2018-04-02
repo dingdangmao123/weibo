@@ -4,6 +4,8 @@
 
 - The server use **PHP**, **MySQL** and **Redis**.
 
+- **Java Netty** + **Redis** to make real-time message notification
+
 - [中文文档](https://github.com/dingdangmao123/weibo/blob/master/README.md)
 
 
