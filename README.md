@@ -11,7 +11,23 @@
 
 ## 开发笔记
 
-- 个人觉得最重要的是设计好Json数据协议，利用PHP输出Json数据，采用Okhttp和Gson得到Java数据模型，Gson泛型的问题，将实体消息封装到inner字段内，通过类继承绕开泛型，code字段和msg字段交给BaseActivity，BaseFragment检查处理。
+- 个人觉得最重要的是设计好Json数据协议，利用PHP输出Json数据，没有采用Retrofit之类框架，通过封装Okhttp和Gson传入class对象直接获取Java模型对象(出错也会将错误信息生成SysMsg对象避免传回空指针)，Gson泛型的问题，将实体消息封装到inner字段内，通过类继承绕开泛型，先将SysMsg交给BaseActivity，BaseFragment检查处理，确认没有出错则强制转换成子模型，供后续调用。
+
+```java
+ public class SysMsg {
+
+     private String code;
+
+     private String msg;
+     
+   }
+  
+ public class TitleModel extends SysMsg {
+
+    private LinkedList<inner> inner;
+ }
+  
+```
 
 - Token字段登录后存入MySQL，并缓存到Redis,登录后自动刷新，旧的自动废弃。
 
