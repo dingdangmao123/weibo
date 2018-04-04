@@ -23,6 +23,7 @@
 
 - @，评论，点赞等消息写入MySQL，再同步至Redis消息队列，通过Java Netty框架构建NIO服务器，与客户端保持长连接，提供实时的消息提醒，目前只在首页提供红点提示，也可在全局添加Notification通知；
 
+- 图片九宫格采用的是第三方控件，布局算法无非是1张，4张或者3列显示。
 
 ## 主要框架
 - [ButterKnife](https://github.com/JakeWharton/butterknife)
