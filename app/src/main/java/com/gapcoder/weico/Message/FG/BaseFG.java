@@ -61,8 +61,8 @@ public class BaseFG extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         binder.unbind();
     }
 
